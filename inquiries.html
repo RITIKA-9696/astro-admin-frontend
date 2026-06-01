@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inquiries — Astro Numerics Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { active: '#111844', border2: '#4B5694', bg: '#EAE0CF', hover2: '#7288AE', card: '#f5f0e8', dark: '#1a2155' } } } }</script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif
+        }
+
+        .sidebar-collapsed {
+            width: 68px !important
+        }
+
+        .sidebar-collapsed .nav-label,
+        .sidebar-collapsed .sidebar-brand-text,
+        .sidebar-collapsed .sidebar-section-label {
+            display: none !important
+        }
+
+        .sidebar-collapsed .nav-item {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0
+        }
+
+        .sidebar-collapsed .nav-icon {
+            margin: 0
+        }
+
+        .main-expanded {
+            margin-left: 68px !important
+        }
+
+        @media(max-width:1023px) {
+            #sidebar {
+                transform: translateX(-100%)
+            }
+
+            #sidebar.sidebar-open {
+                transform: translateX(0)
+            }
+
+            #main-wrapper {
+                margin-left: 0 !important
+            }
+        }
+
+        .nav-active {
+            background: #111844 !important;
+            color: #EAE0CF !important
+        }
+
+        .nav-active .nav-icon {
+            color: #EAE0CF !important
+        }
+
+        .toast-animate {
+            animation: slideIn 0.2s ease-out
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-[#EAE0CF] text-[#111844] min-h-screen">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar"
+        class="fixed top-0 left-0 h-full w-[260px] bg-[#EDE9E6] z-[100] flex flex-col transition-all duration-300 overflow-hidden">
+        <div class="flex items-center gap-3 px-5 py-4 border-b border-[#4B5694]/30">
+            <div
+                class="w-9 h-9 rounded-lg bg-[#EAE0CF] flex items-center justify-center text-[#111844] font-bold text-base flex-shrink-0">
+                ✦</div>
+            <div class="sidebar-brand-text min-w-0">
+                <div class="text-[#111844] font-semibold text-sm leading-tight truncate">Astro Numerics</div>
+                <div class="text-[#7288AE] text-xs leading-tight">Admin Panel</div>
+            </div>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
+            <div
+                class="sidebar-section-label px-3 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-[#4B5694]">
+                Main</div>
+            <a href="/index.html" data-nav-link
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
+                    class="nav-icon text-base flex-shrink-0">⊞</span><span class="nav-label">Dashboard</span></a>
+            <a href="/inquiries.html" data-nav-link
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
+                    class="nav-icon text-base flex-shrink-0">💬</span><span class="nav-label">Inquiries /
+                    Leads</span></a>
+            <div
+                class="sidebar-section-label px-3 pt-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-[#4B5694]">
+                Manage</div>
+            <a href="/services.html" data-nav-link
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
+                    class="nav-icon text-base flex-shrink-0">✨</span><span class="nav-label">Services</span></a>
+            <a href="/testimonials.html" data-nav-link
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
+                    class="nav-icon text-base flex-shrink-0">⭐</span><span class="nav-label">Testimonials</span></a>
+            <a href="/certificates.html" data-nav-link
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
+                    class="nav-icon text-base flex-shrink-0">🏅</span><span class="nav-label">Certificates</span></a>
+            <a href="/courses.html" data-nav-link
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
+                    class="nav-icon text-base flex-shrink-0">📚</span><span class="nav-label">Courses</span></a>
+            <a href="/products.html" data-nav-link
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
+                    class="nav-icon text-base flex-shrink-0">💎</span><span class="nav-label">Products</span></a>
+        </nav>
+        <div class="px-4 py-3 border-t border-[#4B5694]/30">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-full bg-[#4B5694] flex items-center justify-center text-[#EAE0CF] text-xs font-bold flex-shrink-0">
+                    AD</div>
+                <div class="sidebar-brand-text min-w-0">
+                    <div class="text-[#EAE0CF] text-xs font-medium truncate">Admin</div>
+                    <div class="text-[#7288AE] text-xs truncate">admin@astronumerics.in</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div id="sidebar-overlay" class="hidden fixed inset-0 bg-[#111844]/50 z-[90] lg:hidden"></div>
+
+    <!-- MAIN -->
+    <div id="main-wrapper" class="ml-[260px] flex flex-col min-h-screen transition-all duration-300">
+
+        <!-- HEADER -->
+        <header
+            class="sticky top-0 z-[200] h-16 bg-[#f5f0e8] border-b border-[#4B5694]/20 flex items-center justify-between px-5 shadow-sm">
+            <div class="flex items-center gap-4">
+                <button id="sidebar-toggle"
+                    class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+                <div>
+                    <h1 class="text-sm font-semibold text-[#111844]">Inquiries / Lead Manager</h1>
+                    <p class="text-xs text-[#7288AE]">Track and manage client leads</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="notif-btn"
+                    class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors relative">
+                    <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                </button>
+                <div class="relative">
+                    <button id="user-menu-btn"
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#4B5694]/10 transition-colors">
+                        <div
+                            class="w-7 h-7 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-xs font-bold">
+                            AD</div>
+                        <span class="text-xs font-medium text-[#111844] hidden sm:block">Admin</span>
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </button>
+                    <div id="user-menu"
+                        class="hidden absolute right-0 top-full mt-1 w-44 bg-[#f5f0e8] border border-[#4B5694]/20 rounded-xl shadow-lg py-1 z-50">
+                        <a href="#"
+                            class="flex items-center gap-2 px-4 py-2 text-xs text-[#111844] hover:bg-[#7288AE]/10 transition-colors">👤
+                            Profile</a>
+                        <a href="#"
+                            class="flex items-center gap-2 px-4 py-2 text-xs text-[#111844] hover:bg-[#7288AE]/10 transition-colors">⚙️
+                            Settings</a>
+                        <div class="border-t border-[#4B5694]/10 my-1"></div>
+                        <a href="#"
+                            class="flex items-center gap-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition-colors">🚪
+                            Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- PAGE -->
+        <main class="flex-1 p-5 space-y-4">
+
+            <!-- Top bar: stats + add btn -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap gap-3" id="inq-stats"></div>
+                <button id="btn-add-inquiry"
+                    class="flex items-center gap-2 px-4 py-2 bg-[#111844] text-[#EAE0CF] text-xs font-medium rounded-lg hover:bg-[#1d2a70] transition-colors shadow-sm">
+                    <span class="text-base leading-none">+</span> Add Inquiry
+                </button>
+            </div>
+
+            <!-- Filter bar -->
+            <div class="bg-card rounded-xl border border-[#4B5694]/20 shadow-sm p-3 flex flex-wrap gap-3 items-center">
+                <input id="inq-search" type="text" placeholder="Search name, mobile, service…"
+                    class="flex-1 min-w-[200px] text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694] transition-colors" />
+                <select id="filter-status"
+                    class="text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+                    <option value="">All Statuses</option>
+                    <option>New</option>
+                    <option>Contacted</option>
+                    <option>Session Done</option>
+                    <option>Follow-up</option>
+                </select>
+                <select id="filter-service"
+                    class="text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+                    <option value="">All Services</option>
+                </select>
+                <button id="btn-export-csv"
+                    class="px-3 py-2 text-xs border border-[#4B5694]/30 text-[#4B5694] rounded-lg hover:bg-[#4B5694]/10 transition-colors">⬇
+                    Export CSV</button>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-card rounded-xl border border-[#4B5694]/20 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs">
+                        <thead>
+                            <tr class="bg-[#EAE0CF]/60 border-b border-[#4B5694]/15">
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">#</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Name & Mobile</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Service</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Status</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">WA Clicks</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Date</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inq-tbody" class="divide-y divide-[#4B5694]/10"></tbody>
+                    </table>
+                </div>
+                <div id="empty-inq-tbody" class="hidden py-10 text-center text-xs text-[#7288AE]">No inquiries found
+                </div>
+                <div id="inq-pagination"
+                    class="flex items-center justify-between px-4 py-3 border-t border-[#4B5694]/15"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL OVERLAY TEMPLATE -->
+    <div id="modal-root"
+        class="hidden fixed inset-0 z-[300] flex items-center justify-center bg-[#111844]/70 backdrop-blur-sm"
+        style="display: none;">
+        <div class="bg-card rounded-xl w-full max-w-md mx-4 shadow-2xl transform transition-all">
+            <div class="flex items-center justify-between px-5 py-3 border-b border-[#4B5694]/15">
+                <h3 id="modal-title" class="text-sm font-semibold text-[#111844]">Modal Title</h3>
+                <button id="modal-close"
+                    class="text-[#7288AE] hover:text-[#111844] text-lg leading-none">&times;</button>
+            </div>
+            <div id="modal-body" class="p-5 max-h-[60vh] overflow-y-auto"></div>
+            <div class="flex justify-end gap-2 px-5 py-3 border-t border-[#4B5694]/15 bg-[#EAE0CF]/30">
+                <button id="modal-cancel"
+                    class="px-4 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 hover:bg-[#4B5694]/10 transition-colors">Cancel</button>
+                <button id="modal-confirm"
+                    class="px-4 py-1.5 text-xs rounded-lg bg-[#111844] text-[#EAE0CF] hover:bg-[#1d2a70] transition-colors">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[400] space-y-2"></div>
+
+    <script>
+        // ============================================================
+        // COMPLETE SAMPLE DATA MODULE (with auto-initialization)
+        // ============================================================
+        const SAMPLE_DATA_VERSION_INQ = 'astro_inq_v2';
+
+        // Rich sample inquiries data (15+ realistic leads)
+        const SAMPLE_INQUIRIES = [
+            { id: 'inq_1', name: 'Priya Sharma', mobile: '9876543210', service: 'Numerology Reading', status: 'New', wpClicks: 2, date: '2025-06-01', notes: 'Interested in birth date analysis' },
+            { id: 'inq_2', name: 'Rahul Mehta', mobile: '9988776655', service: 'Vedic Astrology', status: 'Contacted', wpClicks: 1, date: '2025-05-30', notes: 'Follow up next week' },
+            { id: 'inq_3', name: 'Anjali Nair', mobile: '9876123450', service: 'Gemstone Recommendation', status: 'New', wpClicks: 0, date: '2025-05-29', notes: 'Wants blue sapphire guidance' },
+            { id: 'inq_4', name: 'Vikram Singh', mobile: '9911223344', service: 'Vaastu Consultation', status: 'Session Done', wpClicks: 5, date: '2025-05-28', notes: 'Completed consultation, positive feedback' },
+            { id: 'inq_5', name: 'Neha Gupta', mobile: '9823456789', service: 'Numerology Reading', status: 'New', wpClicks: 0, date: '2025-05-27', notes: 'Wants name correction' },
+            { id: 'inq_6', name: 'Arjun Reddy', mobile: '9700011223', service: 'Vedic Astrology', status: 'Follow-up', wpClicks: 3, date: '2025-05-26', notes: 'Asked about marriage timeline' },
+            { id: 'inq_7', name: 'Sneha Desai', mobile: '9876501234', service: 'Tarot Card Reading', status: 'New', wpClicks: 1, date: '2025-05-25', notes: 'Career guidance required' },
+            { id: 'inq_8', name: 'Karthik Iyer', mobile: '9955667788', service: 'Gemstone Recommendation', status: 'Contacted', wpClicks: 2, date: '2025-05-24', notes: 'Interested in emerald' },
+            { id: 'inq_9', name: 'Divya Menon', mobile: '9988223344', service: 'Numerology Reading', status: 'Session Done', wpClicks: 4, date: '2025-05-23', notes: 'Great session, planning to buy report' },
+            { id: 'inq_10', name: 'Amit Khanna', mobile: '9876112233', service: 'Vaastu Consultation', status: 'New', wpClicks: 0, date: '2025-05-22', notes: 'Home vaastu for new flat' },
+            { id: 'inq_11', name: 'Shreya Joshi', mobile: '9900112233', service: 'Vedic Astrology', status: 'Follow-up', wpClicks: 2, date: '2025-05-21', notes: 'Asked for horoscope matching' },
+            { id: 'inq_12', name: 'Manoj Tiwari', mobile: '9812345678', service: 'Gemstone Recommendation', status: 'Contacted', wpClicks: 1, date: '2025-05-20', notes: 'Price inquiry for pukhraj' }
+        ];
+
+        // Services for filter dropdown
+        const SAMPLE_SERVICES = [
+            { id: 'svc1', name: 'Numerology Reading', icon: '🔢', active: true },
+            { id: 'svc2', name: 'Vedic Astrology', icon: '🌟', active: true },
+            { id: 'svc3', name: 'Gemstone Recommendation', icon: '💎', active: true },
+            { id: 'svc4', name: 'Tarot Card Reading', icon: '🃏', active: true },
+            { id: 'svc5', name: 'Vaastu Consultation', icon: '🏠', active: true }
+        ];
+
+        // Initialize sample data in localStorage if not exists or outdated
+        function initSampleDataForInquiries() {
+            const flag = localStorage.getItem('astro_sample_inq_initialized');
+            if (flag !== SAMPLE_DATA_VERSION_INQ) {
+                localStorage.setItem('astronumerics_inquiries', JSON.stringify(SAMPLE_INQUIRIES));
+                localStorage.setItem('astronumerics_services', JSON.stringify(SAMPLE_SERVICES));
+                localStorage.setItem('astro_sample_inq_initialized', SAMPLE_DATA_VERSION_INQ);
+                console.log('✅ Sample inquiries & services data loaded!');
+            }
+        }
+
+        // ============================================================
+        // AN Namespace & Helper Functions
+        // ============================================================
+        window.AN = window.AN || {};
+
+        AN.Store = {
+            get: (key) => {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : [];
+            },
+            set: (key, value) => localStorage.setItem(key, JSON.stringify(value))
+        };
+
+        AN.STORAGE_KEYS = {
+            INQUIRIES: 'astronumerics_inquiries',
+            SERVICES: 'astronumerics_services'
+        };
+
+        AN.genId = () => 'inq_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+
+        AN.formatDate = (dateStr) => {
+            if (!dateStr) return '—';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        };
+
+        AN.todayISO = () => new Date().toISOString().split('T')[0];
+
+        // Toast notifications
+        AN.Toast = {
+            show: (message, type = 'success') => {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                const bgColor = type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-blue-600';
+                toast.className = `${bgColor} text-white text-xs px-4 py-2 rounded-lg shadow-lg toast-animate flex items-center gap-2`;
+                toast.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '⚠' : 'ℹ'}</span> ${message}`;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 2500);
+            },
+            success: (msg) => AN.Toast.show(msg, 'success'),
+            error: (msg) => AN.Toast.show(msg, 'error')
+        };
+
+        AN.statusBadge = (status) => {
+            const map = {
+                'New': '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-blue-100 text-blue-700">New</span>',
+                'Contacted': '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-100 text-amber-700">Contacted</span>',
+                'Session Done': '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-green-100 text-green-700">Session Done</span>',
+                'Follow-up': '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-purple-100 text-purple-700">Follow-up</span>'
+            };
+            return map[status] || '<span class="px-2 py-0.5 rounded-full bg-gray-100">—</span>';
+        };
+
+        AN.confirmDelete = (name, callback) => {
+            const modal = document.getElementById('modal-root');
+            document.getElementById('modal-title').innerText = 'Confirm Delete';
+            document.getElementById('modal-body').innerHTML = `<p class="text-sm text-[#111844]">Are you sure you want to delete "<strong>${escapeHtml(name)}</strong>"? This action cannot be undone.</p>`;
+            modal.style.display = 'flex';
+            const confirmBtn = document.getElementById('modal-confirm');
+            const cancelBtn = document.getElementById('modal-cancel');
+            const closeBtn = document.getElementById('modal-close');
+            const cleanup = () => {
+                modal.style.display = 'none';
+                confirmBtn.removeEventListener('click', handler);
+                cancelBtn.removeEventListener('click', cleanup);
+                closeBtn.removeEventListener('click', cleanup);
+            };
+            const handler = () => { cleanup(); if (callback) callback(); };
+            confirmBtn.addEventListener('click', handler);
+            cancelBtn.addEventListener('click', cleanup);
+            closeBtn.addEventListener('click', cleanup);
+        };
+
+        AN.paginate = (items, page, perPage) => {
+            const total = items.length;
+            const totalPages = Math.ceil(total / perPage);
+            const current = Math.min(Math.max(1, page), totalPages || 1);
+            const start = (current - 1) * perPage;
+            return { items: items.slice(start, start + perPage), total, current, totalPages, from: start + 1, to: Math.min(start + perPage, total) };
+        };
+
+        AN.renderPagination = (containerId, pInfo, onPageChange) => {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            if (pInfo.totalPages <= 1) { container.innerHTML = ''; return; }
+            let html = `<div class="flex items-center gap-1 text-xs"><span class="text-[#7288AE]">${pInfo.from}-${pInfo.to} of ${pInfo.total}</span><div class="flex gap-1">`;
+            for (let i = 1; i <= pInfo.totalPages; i++) {
+                const active = i === pInfo.current ? 'bg-[#111844] text-[#EAE0CF]' : 'bg-[#EAE0CF] text-[#4B5694] hover:bg-[#4B5694]/10';
+                html += `<button data-page="${i}" class="w-7 h-7 rounded ${active} transition-colors">${i}</button>`;
+            }
+            html += `</div></div>`;
+            container.innerHTML = html;
+            container.querySelectorAll('[data-page]').forEach(btn => {
+                btn.addEventListener('click', (e) => { onPageChange(parseInt(e.target.dataset.page)); });
+            });
+        };
+
+        AN.exportCSV = (filename, fields, data) => {
+            const headers = fields.join(',');
+            const rows = data.map(item => fields.map(f => `"${String(item[f] || '').replace(/"/g, '""')}"`).join(','));
+            const csv = [headers, ...rows].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        };
+
+        AN.openWhatsApp = (mobile, message = '') => {
+            const cleanMobile = mobile.replace(/[^0-9]/g, '');
+            if (!cleanMobile) return;
+            const url = `https://wa.me/91${cleanMobile}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        };
+
+        // Modal handler for add/edit
+        let currentModalCallback = null;
+        function showModal(title, bodyHtml, onConfirm, confirmText = 'Confirm') {
+            const modal = document.getElementById('modal-root');
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerHTML = bodyHtml;
+            document.getElementById('modal-confirm').innerText = confirmText;
+            modal.style.display = 'flex';
+            const confirmBtn = document.getElementById('modal-confirm');
+            const cancelBtn = document.getElementById('modal-cancel');
+            const closeBtn = document.getElementById('modal-close');
+            const cleanup = () => {
+                modal.style.display = 'none';
+                confirmBtn.removeEventListener('click', handler);
+                cancelBtn.removeEventListener('click', cleanup);
+                closeBtn.removeEventListener('click', cleanup);
+            };
+            const handler = () => {
+                if (onConfirm && onConfirm() !== false) cleanup();
+                else if (!onConfirm) cleanup();
+            };
+            confirmBtn.addEventListener('click', handler);
+            cancelBtn.addEventListener('click', cleanup);
+            closeBtn.addEventListener('click', cleanup);
+        }
+
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+
+        // ============================================================
+        // MAIN DASHBOARD LOGIC
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            initSampleDataForInquiries();
+
+            let data = AN.Store.get(AN.STORAGE_KEYS.INQUIRIES) || [];
+            let services = AN.Store.get(AN.STORAGE_KEYS.SERVICES) || [];
+            let currentPage = 1;
+            const PER_PAGE = 8;
+
+            function save() { AN.Store.set(AN.STORAGE_KEYS.INQUIRIES, data); }
+            function refreshServicesFilter() {
+                const select = document.getElementById('filter-service');
+                select.innerHTML = '<option value="">All Services</option>' + services.map(s => `<option>${s.name}</option>`).join('');
+            }
+
+            function getFiltered() {
+                const query = document.getElementById('inq-search').value.toLowerCase();
+                const status = document.getElementById('filter-status').value;
+                const service = document.getElementById('filter-service').value;
+                return data.filter(i => {
+                    const matchSearch = (i.name + i.mobile + i.service).toLowerCase().includes(query);
+                    const matchStatus = !status || i.status === status;
+                    const matchService = !service || i.service === service;
+                    return matchSearch && matchStatus && matchService;
+                });
+            }
+
+            function renderStats() {
+                const stats = [
+                    { label: 'New', color: 'bg-blue-100 text-blue-700' },
+                    { label: 'Contacted', color: 'bg-amber-100 text-amber-700' },
+                    { label: 'Session Done', color: 'bg-green-100 text-green-700' },
+                    { label: 'Follow-up', color: 'bg-purple-100 text-purple-700' }
+                ];
+                document.getElementById('inq-stats').innerHTML = stats.map(s => `
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg ${s.color} text-xs font-medium border border-current/20">
+        <span>${data.filter(d => d.status === s.label).length}</span><span>${s.label}</span>
+      </div>
+    `).join('');
+            }
+
+            function renderTable() {
+                const filtered = getFiltered();
+                const pInfo = AN.paginate(filtered, currentPage, PER_PAGE);
+                const tbody = document.getElementById('inq-tbody');
+                if (pInfo.items.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="px-4 py-8 text-center text-xs text-[#7288AE]">No inquiries found</td></tr>';
+                } else {
+                    tbody.innerHTML = pInfo.items.map((inq, idx) => `
+        <tr class="hover:bg-[#EAE0CF]/40 transition-colors">
+          <td class="px-4 py-3 text-[#7288AE]">${pInfo.from + idx}</td>
+          <td class="px-4 py-3">
+            <div class="font-medium text-[#111844]">${escapeHtml(inq.name)}</div>
+            <div class="text-[#7288AE] mt-0.5">${inq.mobile}</div>
+          </td>
+          <td class="px-4 py-3 text-[#4B5694]">${inq.service || '—'}</td>
+          <td class="px-4 py-3">${AN.statusBadge(inq.status)}</td>
+          <td class="px-4 py-3">
+            <button onclick="handleWA('${inq.id}')" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition-colors text-xs font-medium">
+              📲 ${inq.wpClicks || 0}
+            </button>
+          </td>
+          <td class="px-4 py-3 text-[#7288AE]">${AN.formatDate(inq.date)}</td>
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-1.5">
+              <button onclick="openEdit('${inq.id}')" class="px-2.5 py-1 rounded text-xs bg-[#111844]/10 text-[#111844] hover:bg-[#111844]/20 transition-colors">Edit</button>
+              <button onclick="handleDelete('${inq.id}')" class="px-2.5 py-1 rounded text-xs bg-red-50 text-red-600 hover:bg-red-100 transition-colors">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+                }
+                AN.renderPagination('inq-pagination', pInfo, p => { currentPage = p; renderTable(); renderStats(); });
+                renderStats();
+            }
+
+            function buildForm(inq = {}) {
+                const serviceOptions = services.map(s => `<option ${inq.service === s.name ? 'selected' : ''}>${s.name}</option>`).join('');
+                return `
+      <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs font-medium text-[#4B5694] mb-1">Full Name *</label><input name="name" value="${escapeHtml(inq.name || '')}" type="text" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" /></div>
+          <div><label class="block text-xs font-medium text-[#4B5694] mb-1">Mobile *</label><input name="mobile" value="${inq.mobile || ''}" type="tel" maxlength="10" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" /></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs font-medium text-[#4B5694] mb-1">Service</label><select name="service" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF]"><option value="">Select service…</option>${serviceOptions}</select></div>
+          <div><label class="block text-xs font-medium text-[#4B5694] mb-1">Status</label><select name="status" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF]"><option ${inq.status === 'New' ? 'selected' : ''}>New</option><option ${inq.status === 'Contacted' ? 'selected' : ''}>Contacted</option><option ${inq.status === 'Session Done' ? 'selected' : ''}>Session Done</option><option ${inq.status === 'Follow-up' ? 'selected' : ''}>Follow-up</option></select></div>
+        </div>
+        <div><label class="block text-xs font-medium text-[#4B5694] mb-1">Notes</label><textarea name="notes" rows="2" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF]">${escapeHtml(inq.notes || '')}</textarea></div>
+        <input type="hidden" name="id" value="${inq.id || ''}" />
+      </div>
+    `;
+            }
+
+            function openAdd() {
+                showModal('Add New Inquiry', buildForm(), () => {
+                    const name = document.querySelector('#modal-body [name="name"]')?.value.trim();
+                    const mobile = document.querySelector('#modal-body [name="mobile"]')?.value.trim();
+                    if (!name || !mobile) { AN.Toast.error('Name and mobile are required'); return false; }
+                    const newInq = {
+                        id: AN.genId(),
+                        name, mobile,
+                        service: document.querySelector('#modal-body [name="service"]')?.value || '',
+                        status: document.querySelector('#modal-body [name="status"]')?.value || 'New',
+                        notes: document.querySelector('#modal-body [name="notes"]')?.value || '',
+                        wpClicks: 0,
+                        date: AN.todayISO()
+                    };
+                    data.unshift(newInq);
+                    save();
+                    currentPage = 1;
+                    renderTable();
+                    AN.Toast.success('Inquiry added successfully!');
+                }, 'Add Inquiry');
+            }
+
+            window.openEdit = function (id) {
+                const inq = data.find(i => i.id === id);
+                if (!inq) return;
+                showModal('Edit Inquiry', buildForm(inq), () => {
+                    const name = document.querySelector('#modal-body [name="name"]')?.value.trim();
+                    if (!name) { AN.Toast.error('Name is required'); return false; }
+                    inq.name = name;
+                    inq.mobile = document.querySelector('#modal-body [name="mobile"]')?.value.trim();
+                    inq.service = document.querySelector('#modal-body [name="service"]')?.value;
+                    inq.status = document.querySelector('#modal-body [name="status"]')?.value;
+                    inq.notes = document.querySelector('#modal-body [name="notes"]')?.value;
+                    save();
+                    renderTable();
+                    AN.Toast.success('Inquiry updated!');
+                }, 'Save Changes');
+            };
+
+            window.handleDelete = function (id) {
+                const inq = data.find(i => i.id === id);
+                AN.confirmDelete(inq?.name || 'this inquiry', () => {
+                    data = data.filter(i => i.id !== id);
+                    save();
+                    if (currentPage > 1 && getFiltered().length <= (currentPage - 1) * PER_PAGE) currentPage--;
+                    renderTable();
+                    AN.Toast.success('Inquiry deleted');
+                });
+            };
+
+            window.handleWA = function (id) {
+                const inq = data.find(i => i.id === id);
+                if (!inq) return;
+                inq.wpClicks = (inq.wpClicks || 0) + 1;
+                save();
+                renderTable();
+                AN.openWhatsApp(inq.mobile, `Hi ${inq.name}, this is from Astro Numerics regarding your inquiry about ${inq.service}. How can we assist you today?`);
+            };
+
+            // Event listeners
+            document.getElementById('btn-add-inquiry').addEventListener('click', openAdd);
+            document.getElementById('inq-search').addEventListener('input', () => { currentPage = 1; renderTable(); });
+            document.getElementById('filter-status').addEventListener('change', () => { currentPage = 1; renderTable(); });
+            document.getElementById('filter-service').addEventListener('change', () => { currentPage = 1; renderTable(); });
+            document.getElementById('btn-export-csv').addEventListener('click', () => {
+                AN.exportCSV('inquiries_export.csv', ['name', 'mobile', 'service', 'status', 'wpClicks', 'date', 'notes'], data);
+                AN.Toast.success('Exported CSV');
+            });
+
+            // Sidebar + user menu interactions
+            document.getElementById('sidebar-toggle')?.addEventListener('click', () => {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                sidebar.classList.toggle('sidebar-open');
+                overlay.classList.toggle('hidden');
+            });
+            document.getElementById('sidebar-overlay')?.addEventListener('click', () => {
+                document.getElementById('sidebar').classList.remove('sidebar-open');
+                document.getElementById('sidebar-overlay').classList.add('hidden');
+            });
+            const userBtn = document.getElementById('user-menu-btn');
+            const userMenu = document.getElementById('user-menu');
+            userBtn?.addEventListener('click', (e) => { e.stopPropagation(); userMenu.classList.toggle('hidden'); });
+            document.addEventListener('click', (e) => { if (!userBtn?.contains(e.target) && !userMenu?.contains(e.target)) userMenu?.classList.add('hidden'); });
+
+            refreshServicesFilter();
+            renderTable();
+        });
+    </script>
+</body>
+
+</html>
