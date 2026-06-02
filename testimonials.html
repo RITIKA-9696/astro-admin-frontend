@@ -1,196 +1,768 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Testimonials — Astro Numerics Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={theme:{extend:{colors:{active:'#111844',border2:'#4B5694',bg:'#EAE0CF',hover2:'#7288AE',card:'#f5f0e8',dark:'#1a2155'}}}}</script>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <script>tailwind.config = { theme: { extend: { colors: { active: '#111844', border2: '#4B5694', bg: '#EAE0CF', hover2: '#7288AE', card: '#f5f0e8', dark: '#1a2155' } } } }</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <style>
-    body{font-family:'Roboto',sans-serif}
-    .sidebar-collapsed{width:68px!important}.sidebar-collapsed .nav-label,.sidebar-collapsed .sidebar-brand-text,.sidebar-collapsed .sidebar-section-label{display:none!important}.sidebar-collapsed .nav-item{justify-content:center;padding-left:0;padding-right:0}.sidebar-collapsed .nav-icon{margin:0}.main-expanded{margin-left:68px!important}
-    @media(max-width:1023px){#sidebar{transform:translateX(-100%)}#sidebar.sidebar-open{transform:translateX(0)}#main-wrapper{margin-left:0!important}}
-    .nav-active{background:#111844!important;color:#EAE0CF!important}
+    body {
+      font-family: 'Roboto', sans-serif
+    }
+
+    .sidebar-collapsed {
+      width: 68px !important
+    }
+
+    .sidebar-collapsed .nav-label,
+    .sidebar-collapsed .sidebar-brand-text,
+    .sidebar-collapsed .sidebar-section-label {
+      display: none !important
+    }
+
+    .sidebar-collapsed .nav-item {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0
+    }
+
+    .sidebar-collapsed .nav-icon {
+      margin: 0
+    }
+
+    .main-expanded {
+      margin-left: 68px !important
+    }
+
+    @media(max-width:1023px) {
+      #sidebar {
+        transform: translateX(-100%)
+      }
+
+      #sidebar.sidebar-open {
+        transform: translateX(0)
+      }
+
+      #main-wrapper {
+        margin-left: 0 !important
+      }
+    }
+
+    .nav-active {
+      background: #111844 !important;
+      color: #EAE0CF !important
+    }
+
+    .nav-active .nav-icon {
+      color: #EAE0CF !important
+    }
+
+    .toast-animate {
+      animation: slideIn 0.2s ease-out
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
   </style>
 </head>
+
 <body class="bg-[#EAE0CF] text-[#111844] min-h-screen">
 
-<!-- SIDEBAR -->
-<aside id="sidebar" class="fixed top-0 left-0 h-full w-[260px] bg-[#111844] z-[100] flex flex-col transition-all duration-300 overflow-hidden">
-  <div class="flex items-center gap-3 px-5 py-4 border-b border-[#4B5694]/30"><div class="w-9 h-9 rounded-lg bg-[#EAE0CF] flex items-center justify-center text-[#111844] font-bold text-base flex-shrink-0">✦</div><div class="sidebar-brand-text min-w-0"><div class="text-[#EAE0CF] font-semibold text-sm leading-tight truncate">Astro Numerics</div><div class="text-[#7288AE] text-xs leading-tight">Admin Panel</div></div></div>
-  <nav class="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
-    <div class="sidebar-section-label px-3 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-[#4B5694]">Main</div>
-    <a href="index.html" data-nav-link class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#EAE0CF]/70 hover:bg-[#7288AE]/20 hover:text-[#EAE0CF] transition-colors duration-150 text-sm"><span class="nav-icon text-base flex-shrink-0">⊞</span><span class="nav-label">Dashboard</span></a>
-    <a href="inquiries.html" data-nav-link class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#EAE0CF]/70 hover:bg-[#7288AE]/20 hover:text-[#EAE0CF] transition-colors duration-150 text-sm"><span class="nav-icon text-base flex-shrink-0">💬</span><span class="nav-label">Inquiries / Leads</span></a>
-    <div class="sidebar-section-label px-3 pt-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-[#4B5694]">Manage</div>
-    <a href="services.html" data-nav-link class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#EAE0CF]/70 hover:bg-[#7288AE]/20 hover:text-[#EAE0CF] transition-colors duration-150 text-sm"><span class="nav-icon text-base flex-shrink-0">✨</span><span class="nav-label">Services</span></a>
-    <a href="testimonials.html" data-nav-link class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#EAE0CF]/70 hover:bg-[#7288AE]/20 hover:text-[#EAE0CF] transition-colors duration-150 text-sm"><span class="nav-icon text-base flex-shrink-0">⭐</span><span class="nav-label">Testimonials</span></a>
-    <a href="certificates.html" data-nav-link class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#EAE0CF]/70 hover:bg-[#7288AE]/20 hover:text-[#EAE0CF] transition-colors duration-150 text-sm"><span class="nav-icon text-base flex-shrink-0">🏅</span><span class="nav-label">Certificates</span></a>
-    <a href="courses.html" data-nav-link class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#EAE0CF]/70 hover:bg-[#7288AE]/20 hover:text-[#EAE0CF] transition-colors duration-150 text-sm"><span class="nav-icon text-base flex-shrink-0">📚</span><span class="nav-label">Courses</span></a>
-    <a href="products.html" data-nav-link class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#EAE0CF]/70 hover:bg-[#7288AE]/20 hover:text-[#EAE0CF] transition-colors duration-150 text-sm"><span class="nav-icon text-base flex-shrink-0">💎</span><span class="nav-label">Products</span></a>
-  </nav>
-  <div class="px-4 py-3 border-t border-[#4B5694]/30"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-[#4B5694] flex items-center justify-center text-[#EAE0CF] text-xs font-bold flex-shrink-0">AD</div><div class="sidebar-brand-text min-w-0"><div class="text-[#EAE0CF] text-xs font-medium truncate">Admin</div><div class="text-[#7288AE] text-xs truncate">admin@astronumerics.in</div></div></div></div>
-</aside>
-<div id="sidebar-overlay" class="hidden fixed inset-0 bg-[#111844]/50 z-[90] lg:hidden"></div>
-
-<div id="main-wrapper" class="ml-[260px] flex flex-col min-h-screen transition-all duration-300">
-  <header class="sticky top-0 z-[200] h-16 bg-[#f5f0e8] border-b border-[#4B5694]/20 flex items-center justify-between px-5 shadow-sm">
-    <div class="flex items-center gap-4"><button id="sidebar-toggle" class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><div><h1 class="text-sm font-semibold text-[#111844]">Testimonial Manager</h1><p class="text-xs text-[#7288AE]">Approve, hide and manage client reviews</p></div></div>
-    <div class="flex items-center gap-2"><button id="notif-btn" class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors relative"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span></button><div class="relative"><button id="user-menu-btn" class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#4B5694]/10 transition-colors"><div class="w-7 h-7 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-xs font-bold">AD</div><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button><div id="user-menu" class="hidden absolute right-0 top-full mt-1 w-44 bg-[#f5f0e8] border border-[#4B5694]/20 rounded-xl shadow-lg py-1 z-50"><a href="#" class="flex items-center gap-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition-colors">🚪 Logout</a></div></div></div>
-  </header>
-
-  <main class="flex-1 p-5 space-y-4">
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <div class="flex gap-2" id="testi-filter-btns">
-        <button data-filter="" class="filter-btn px-3 py-1.5 text-xs rounded-lg bg-[#111844] text-[#EAE0CF] font-medium transition-colors">All</button>
-        <button data-filter="Approved" class="filter-btn px-3 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors">Approved</button>
-        <button data-filter="Hidden"   class="filter-btn px-3 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors">Hidden</button>
+  <!-- SIDEBAR -->
+  <aside id="sidebar"
+    class="fixed top-0 left-0 h-full w-[260px] bg-[#f5f0e8] z-[100] flex flex-col transition-all duration-300 overflow-hidden shadow-lg">
+    <div class="flex items-center gap-3 px-5 h-16 border border-[#4B5694]/20 shadow-sm">
+      <div
+        class="w-9 h-9 rounded-lg bg-[#111844] flex items-center justify-center text-[#EAE0CF] font-bold text-base flex-shrink-0">
+        <i class="fas fa-star-of-life text-sm"></i>
       </div>
-      <button id="btn-add-testi" class="flex items-center gap-2 px-4 py-2 bg-[#111844] text-[#EAE0CF] text-xs font-medium rounded-lg hover:bg-[#1d2a70] transition-colors shadow-sm">+ Add Testimonial</button>
+      <div class="sidebar-brand-text min-w-0">
+        <div class="text-[#111844] font-semibold text-sm leading-tight truncate">Astro Numerics</div>
+        <div class="text-[#7288AE] text-xs leading-tight">Admin Panel</div>
+      </div>
     </div>
-
-    <!-- Cards Grid -->
-    <div id="testi-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-    <div id="testi-empty" class="hidden text-center py-10 text-xs text-[#7288AE]">No testimonials found</div>
-  </main>
-</div>
-
-<script src="assets/js/common.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const { Store, STORAGE_KEYS, genId, Toast, Modal, statusBadge, starRating, confirmDelete } = AN;
-  let data = Store.get(STORAGE_KEYS.TESTIMONIALS) || [];
-  let services = Store.get(STORAGE_KEYS.SERVICES) || [];
-  let filterStatus = '';
-  function save() { Store.set(STORAGE_KEYS.TESTIMONIALS, data); }
-
-  function render() {
-    const filtered = filterStatus ? data.filter(t => t.status === filterStatus) : data;
-    const grid = document.getElementById('testi-grid');
-    const empty = document.getElementById('testi-empty');
-    grid.innerHTML = '';
-    empty.style.display = filtered.length ? 'none' : '';
-
-    filtered.forEach(t => {
-      const card = document.createElement('div');
-      card.className = `bg-card rounded-xl border shadow-sm p-4 transition-all duration-150 ${t.status === 'Hidden' ? 'opacity-60 border-gray-200' : 'border-[#4B5694]/20'}`;
-      card.innerHTML = `
-        <div class="flex items-start gap-3 mb-3">
-          <div class="w-9 h-9 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-xs font-bold flex-shrink-0">${t.initial || t.name.slice(0,2).toUpperCase()}</div>
-          <div class="flex-1 min-w-0">
-            <div class="font-semibold text-sm text-[#111844] truncate">${t.name}</div>
-            <div class="text-xs text-[#7288AE] truncate">${t.service}</div>
-          </div>
-          <div>${statusBadge(t.status)}</div>
+    <nav class="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
+     
+      <a href="/index.html" data-nav-link="dashboard"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-chart-pie"></i></span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="/inquiries.html" data-nav-link="inquiries"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-comments"></i></span>
+        <span class="nav-label">Inquiries / Leads</span>
+      </a>
+     
+      <a href="/services.html" data-nav-link="services"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-briefcase"></i></span>
+        <span class="nav-label">Services</span>
+      </a>
+      <a href="/testimonials.html" data-nav-link="testimonials"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-star"></i></span>
+        <span class="nav-label">Testimonials</span>
+      </a>
+      <!-- <a href="/courses.html" data-nav-link="courses"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-graduation-cap"></i></span>
+        <span class="nav-label">Courses</span>
+      </a> -->
+      <a href="/products.html" data-nav-link="products"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-box"></i></span>
+        <span class="nav-label">Products</span>
+      </a>
+    </nav>
+    <div class="px-4 py-3 border-t border-[#4B5694]/20 bg-[#EAE0CF]/30">
+      <div class="flex items-center gap-3">
+        <div
+          class="w-8 h-8 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-xs font-bold flex-shrink-0">
+          AD</div>
+        <div class="sidebar-brand-text min-w-0">
+          <div class="text-[#111844] text-xs font-medium truncate">Admin</div>
+          <div class="text-[#7288AE] text-xs truncate">admin@astronumerics.in</div>
         </div>
-        <div class="text-xs text-[#4B5694] leading-relaxed mb-3 line-clamp-3">"${t.review}"</div>
-        <div class="flex items-center justify-between pt-3 border-t border-[#4B5694]/10">
-          <div class="flex items-center gap-0.5 text-sm">${starRating(t.rating)}</div>
-          <div class="flex items-center gap-1.5">
-            <button data-toggle="${t.id}" class="px-2.5 py-1 text-xs rounded ${t.status==='Approved'?'bg-gray-100 text-gray-600 hover:bg-gray-200':'bg-green-100 text-green-700 hover:bg-green-200'} transition-colors">${t.status==='Approved'?'Hide':'Approve'}</button>
-            <button data-edit="${t.id}" class="px-2.5 py-1 text-xs rounded bg-[#111844]/10 text-[#111844] hover:bg-[#111844]/20 transition-colors">Edit</button>
-            <button data-del="${t.id}" class="px-2.5 py-1 text-xs rounded bg-red-50 text-red-600 hover:bg-red-100 transition-colors">Del</button>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-overlay" class="hidden fixed inset-0 bg-[#111844]/50 z-[90] lg:hidden"></div>
+
+  <div id="main-wrapper" class="ml-[260px] flex flex-col min-h-screen transition-all duration-300">
+    <header
+      class="sticky top-0 z-[200] h-16 bg-[#f5f0e8] border-b border-[#4B5694]/20 flex items-center justify-between px-5 shadow-sm">
+      <div class="flex items-center gap-4">
+        <button id="sidebar-toggle"
+          class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors">
+          <i class="fas fa-bars text-lg"></i>
+        </button>
+        <div>
+          <h1 class="text-sm font-semibold text-[#111844]">Testimonial Manager</h1>
+          <p class="text-xs text-[#7288AE]">Manage client reviews & feedback</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="notif-btn"
+          class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors relative">
+          <i class="fas fa-bell text-base"></i>
+        </button>
+        <div class="relative">
+          <button id="user-menu-btn"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#4B5694]/10 transition-colors">
+            <div
+              class="w-7 h-7 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-xs font-bold">
+              AD</div>
+            <span class="text-xs font-medium text-[#111844] hidden sm:block">Admin</span>
+            <i class="fas fa-chevron-down text-[10px] text-[#4B5694]"></i>
+          </button>
+          <div id="user-menu"
+            class="hidden absolute right-0 top-full mt-1 w-44 bg-[#f5f0e8] border border-[#4B5694]/20 rounded-xl shadow-lg py-1 z-50">
+            <a href="#"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-[#111844] hover:bg-[#7288AE]/10 transition-colors">
+              <i class="fas fa-user-circle w-4"></i> Profile
+            </a>
+            <div class="border-t border-[#4B5694]/10 my-1"></div>
+            <a href="#"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition-colors">
+              <i class="fas fa-sign-out-alt w-4"></i> Logout
+            </a>
           </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 p-5 space-y-4">
+      <!-- Top bar: stats + filter + add btn -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex gap-2" id="testi-filter-btns">
+          <button data-filter=""
+            class="filter-btn px-3 py-1.5 text-xs rounded-lg bg-[#111844] text-[#EAE0CF] font-medium transition-colors">All</button>
+          <button data-filter="Approved"
+            class="filter-btn px-3 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors">Approved</button>
+          <button data-filter="Hidden"
+            class="filter-btn px-3 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors">Hidden</button>
+          <button data-filter="Pending"
+            class="filter-btn px-3 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors">Pending</button>
+        </div>
+        <div class="flex gap-2">
+          <button id="btn-export-csv"
+            class="flex items-center gap-1.5 px-3 py-2 text-xs border border-[#4B5694]/30 text-[#4B5694] rounded-lg hover:bg-[#4B5694]/10 transition-colors">
+            <i class="fas fa-download text-xs"></i> Export CSV
+          </button>
+          <button id="btn-add-testi"
+            class="flex items-center gap-2 px-4 py-2 bg-[#111844] text-[#EAE0CF] text-xs font-medium rounded-lg hover:bg-[#1d2a70] transition-colors shadow-sm">
+            <i class="fas fa-plus text-xs"></i> Add Testimonial
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter bar: search -->
+      <div class="bg-card rounded-xl border border-[#4B5694]/20 shadow-sm p-3 flex flex-wrap gap-3 items-center">
+        <input id="testi-search" type="text" placeholder="Search by name, service or review..."
+          class="flex-1 min-w-[200px] text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694] transition-colors" />
+      </div>
+
+      <!-- Data Table -->
+      <div class="bg-card rounded-xl border border-[#4B5694]/20 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead>
+              <tr class="bg-[#EAE0CF]/60 border-b border-[#4B5694]/15">
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">#</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Client</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Service</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Rating</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Review</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Status</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Date</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="testi-tbody" class="divide-y divide-[#4B5694]/10"></tbody>
+          </table>
+        </div>
+        <div id="testi-empty" class="hidden py-10 text-center text-xs text-[#7288AE]">
+          <i class="fas fa-inbox mr-2"></i> No testimonials found
+        </div>
+        <div id="testi-pagination" class="flex items-center justify-between px-4 py-3 border-t border-[#4B5694]/15">
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Root -->
+  <div id="modal-root"
+    class="hidden fixed inset-0 z-[300] flex items-center justify-center bg-[#111844]/70 backdrop-blur-sm"
+    style="display: none;">
+    <div class="bg-card rounded-xl w-full max-w-md mx-4 shadow-2xl transform transition-all">
+      <div class="flex items-center justify-between px-5 py-3 border-b border-[#4B5694]/15">
+        <h3 id="modal-title" class="text-sm font-semibold text-[#111844]">Modal Title</h3>
+        <button id="modal-close" class="text-[#7288AE] hover:text-[#111844] text-lg leading-none">&times;</button>
+      </div>
+      <div id="modal-body" class="p-5 max-h-[60vh] overflow-y-auto"></div>
+      <div class="flex justify-end gap-2 px-5 py-3 border-t border-[#4B5694]/15 bg-[#EAE0CF]/30">
+        <button id="modal-cancel"
+          class="px-4 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 hover:bg-[#4B5694]/10 transition-colors">Cancel</button>
+        <button id="modal-confirm"
+          class="px-4 py-1.5 text-xs rounded-lg bg-[#111844] text-[#EAE0CF] hover:bg-[#1d2a70] transition-colors">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-[400] space-y-2"></div>
+
+  <script>
+    // ============================================================
+    // COMPLETE SAMPLE DATA MODULE (with auto-initialization)
+    // ============================================================
+    const SAMPLE_DATA_VERSION_TESTI = 'astro_testi_table_v2';
+
+    // Rich sample testimonials data (12+ records)
+    const SAMPLE_TESTIMONIALS = [
+      { id: 'test_1', name: 'Priya Sharma', initial: 'PS', service: 'Numerology Reading', rating: 5, review: 'The numerology reading was incredibly accurate! Dr. Sharma helped me understand my life path and career choices. I feel so much more confident about my future now.', status: 'Approved', date: '2025-05-15' },
+      { id: 'test_2', name: 'Rahul Mehta', initial: 'RM', service: 'Vedic Astrology', rating: 5, review: 'Amazing astrological insights! The planetary alignment analysis was spot on. Got clarity on my marriage timeline and career prospects.', status: 'Approved', date: '2025-05-10' },
+      { id: 'test_3', name: 'Anjali Nair', initial: 'AN', service: 'Gemstone Recommendation', rating: 4, review: 'The gemstone guidance was very helpful. My energy levels have improved significantly since wearing the recommended blue sapphire.', status: 'Approved', date: '2025-05-05' },
+      { id: 'test_4', name: 'Vikram Singh', initial: 'VS', service: 'Vaastu Consultation', rating: 5, review: "Vaastu consultation transformed my home's energy. We noticed positive shifts in family harmony and prosperity within weeks.", status: 'Approved', date: '2025-04-28' },
+      { id: 'test_5', name: 'Neha Gupta', initial: 'NG', service: 'Tarot Card Reading', rating: 5, review: 'The tarot session was enlightening! Got clear answers about my career transition. The guidance was compassionate and insightful.', status: 'Approved', date: '2025-04-20' },
+      { id: 'test_6', name: 'Arjun Reddy', initial: 'AR', service: 'Numerology Reading', rating: 4, review: 'Good experience overall. The name correction suggestion really helped improve my professional life.', status: 'Approved', date: '2025-04-15' },
+      { id: 'test_7', name: 'Sneha Desai', initial: 'SD', service: 'Vedic Astrology', rating: 3, review: 'The reading was okay but some predictions haven\'t manifested yet. Customer service was good though.', status: 'Hidden', date: '2025-04-10' },
+      { id: 'test_8', name: 'Karthik Iyer', initial: 'KI', service: 'Gemstone Recommendation', rating: 5, review: 'The emerald recommended for my Mercury dasha has brought remarkable career growth. Extremely grateful!', status: 'Approved', date: '2025-04-05' },
+      { id: 'test_9', name: 'Divya Menon', initial: 'DM', service: 'Palmistry Analysis', rating: 5, review: 'Fascinating palm reading! Everything mentioned about my life line and fate line was accurate.', status: 'Pending', date: '2025-06-01' },
+      { id: 'test_10', name: 'Amit Khanna', initial: 'AK', service: 'Meditation Coaching', rating: 4, review: 'The meditation techniques taught were very effective for my anxiety. Overall great experience.', status: 'Pending', date: '2025-05-30' },
+      { id: 'test_11', name: 'Ritu Agarwal', initial: 'RA', service: 'Numerology Reading', rating: 5, review: 'Best numerologist I have consulted! My business has seen remarkable growth after following the recommendations.', status: 'Approved', date: '2025-05-25' },
+      { id: 'test_12', name: 'Sunil Kulkarni', initial: 'SK', service: 'Vaastu Consultation', rating: 4, review: 'Good practical advice for office vaastu. Seeing positive changes in team productivity.', status: 'Hidden', date: '2025-05-20' }
+    ];
+
+    // Sample services for dropdown
+    const SAMPLE_SERVICES_TESTI = [
+      { id: 'svc_1', name: 'Numerology Reading' },
+      { id: 'svc_2', name: 'Vedic Astrology' },
+      { id: 'svc_3', name: 'Gemstone Recommendation' },
+      { id: 'svc_4', name: 'Tarot Card Reading' },
+      { id: 'svc_5', name: 'Vaastu Consultation' },
+      { id: 'svc_6', name: 'Palmistry Analysis' },
+      { id: 'svc_7', name: 'Meditation Coaching' }
+    ];
+
+    // Initialize sample data in localStorage
+    function initSampleTestimonialsData() {
+      const flag = localStorage.getItem('astro_sample_testi_table_initialized');
+      if (flag !== SAMPLE_DATA_VERSION_TESTI) {
+        localStorage.setItem('astronumerics_testimonials', JSON.stringify(SAMPLE_TESTIMONIALS));
+        localStorage.setItem('astronumerics_services', JSON.stringify(SAMPLE_SERVICES_TESTI));
+        localStorage.setItem('astro_sample_testi_table_initialized', SAMPLE_DATA_VERSION_TESTI);
+        console.log('✅ Sample testimonials data loaded!');
+      }
+    }
+
+    // ============================================================
+    // AN Namespace & Helper Functions
+    // ============================================================
+    window.AN = window.AN || {};
+
+    AN.Store = {
+      get: (key) => {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : [];
+      },
+      set: (key, value) => localStorage.setItem(key, JSON.stringify(value))
+    };
+
+    AN.STORAGE_KEYS = {
+      TESTIMONIALS: 'astronumerics_testimonials',
+      SERVICES: 'astronumerics_services'
+    };
+
+    AN.genId = () => 'test_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+
+    // Toast notifications
+    AN.Toast = {
+      show: (message, type = 'success') => {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const toast = document.createElement('div');
+        const bgColor = type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : type === 'info' ? 'bg-blue-600' : 'bg-gray-700';
+        const icon = type === 'success' ? '<i class="fas fa-check-circle mr-1"></i>' : type === 'error' ? '<i class="fas fa-exclamation-triangle mr-1"></i>' : '<i class="fas fa-info-circle mr-1"></i>';
+        toast.className = `${bgColor} text-white text-xs px-4 py-2 rounded-lg shadow-lg toast-animate flex items-center gap-2`;
+        toast.innerHTML = `${icon} ${message}`;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 2500);
+      },
+      success: (msg) => AN.Toast.show(msg, 'success'),
+      error: (msg) => AN.Toast.show(msg, 'error'),
+      info: (msg) => AN.Toast.show(msg, 'info')
+    };
+
+    AN.statusBadge = (status) => {
+      const map = {
+        'Approved': '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-green-100 text-green-700"><i class="fas fa-check-circle mr-1 text-[9px]"></i>Approved</span>',
+        'Hidden': '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-gray-100 text-gray-600"><i class="fas fa-eye-slash mr-1 text-[9px]"></i>Hidden</span>',
+        'Pending': '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-100 text-amber-700"><i class="fas fa-clock mr-1 text-[9px]"></i>Pending</span>'
+      };
+      return map[status] || '<span class="px-2 py-0.5 rounded-full bg-gray-100">—</span>';
+    };
+
+    AN.starRating = (rating) => {
+      const full = '★'.repeat(rating);
+      const empty = '☆'.repeat(5 - rating);
+      return `<span class="text-amber-500">${full}</span><span class="text-gray-300">${empty}</span>`;
+    };
+
+    AN.paginate = (items, page, perPage) => {
+      const total = items.length;
+      const totalPages = Math.ceil(total / perPage);
+      const current = Math.min(Math.max(1, page), totalPages || 1);
+      const start = (current - 1) * perPage;
+      return { items: items.slice(start, start + perPage), total, current, totalPages, from: start + 1, to: Math.min(start + perPage, total) };
+    };
+
+    AN.renderPagination = (containerId, pInfo, onPageChange) => {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      if (pInfo.totalPages <= 1) { container.innerHTML = ''; return; }
+      let html = `<div class="flex items-center gap-1 text-xs"><span class="text-[#7288AE]"><i class="fas fa-list mr-1"></i>${pInfo.from}-${pInfo.to} of ${pInfo.total}</span><div class="flex gap-1">`;
+      for (let i = 1; i <= pInfo.totalPages; i++) {
+        const active = i === pInfo.current ? 'bg-[#111844] text-[#EAE0CF]' : 'bg-[#EAE0CF] text-[#4B5694] hover:bg-[#4B5694]/10';
+        html += `<button data-page="${i}" class="w-7 h-7 rounded ${active} transition-colors">${i}</button>`;
+      }
+      html += `</div></div>`;
+      container.innerHTML = html;
+      container.querySelectorAll('[data-page]').forEach(btn => {
+        btn.addEventListener('click', (e) => { onPageChange(parseInt(e.target.dataset.page)); });
+      });
+    };
+
+    AN.exportCSV = (filename, fields, data) => {
+      const headers = fields.join(',');
+      const rows = data.map(item => fields.map(f => `"${String(item[f] || '').replace(/"/g, '""')}"`).join(','));
+      const csv = [headers, ...rows].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    };
+
+    AN.confirmDelete = (name, callback) => {
+      const modal = document.getElementById('modal-root');
+      if (!modal) return;
+      document.getElementById('modal-title').innerText = 'Confirm Delete';
+      document.getElementById('modal-body').innerHTML = `<p class="text-sm text-[#111844]"><i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>Are you sure you want to delete "<strong>${escapeHtml(name)}</strong>"? This action cannot be undone.</p>`;
+      modal.style.display = 'flex';
+      const confirmBtn = document.getElementById('modal-confirm');
+      const cancelBtn = document.getElementById('modal-cancel');
+      const closeBtn = document.getElementById('modal-close');
+      const cleanup = () => {
+        modal.style.display = 'none';
+        confirmBtn.removeEventListener('click', handler);
+        cancelBtn.removeEventListener('click', cleanup);
+        closeBtn.removeEventListener('click', cleanup);
+      };
+      const handler = () => { cleanup(); if (callback) callback(); };
+      confirmBtn.addEventListener('click', handler);
+      cancelBtn.addEventListener('click', cleanup);
+      closeBtn.addEventListener('click', cleanup);
+    };
+
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+
+    // Modal handler
+    function showModal(title, bodyHtml, onConfirm, confirmText = 'Confirm') {
+      const modal = document.getElementById('modal-root');
+      if (!modal) return;
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-body').innerHTML = bodyHtml;
+      document.getElementById('modal-confirm').innerText = confirmText;
+      modal.style.display = 'flex';
+      const confirmBtn = document.getElementById('modal-confirm');
+      const cancelBtn = document.getElementById('modal-cancel');
+      const closeBtn = document.getElementById('modal-close');
+      const cleanup = () => {
+        modal.style.display = 'none';
+        confirmBtn.removeEventListener('click', handler);
+        cancelBtn.removeEventListener('click', cleanup);
+        closeBtn.removeEventListener('click', cleanup);
+      };
+      const handler = () => {
+        if (onConfirm && onConfirm() !== false) cleanup();
+        else if (!onConfirm) cleanup();
+      };
+      confirmBtn.addEventListener('click', handler);
+      cancelBtn.addEventListener('click', cleanup);
+      closeBtn.addEventListener('click', cleanup);
+    }
+
+    // Set active navigation based on current page
+    function setActiveNav() {
+      const currentPath = window.location.pathname;
+      document.querySelectorAll('[data-nav-link]').forEach(link => {
+        link.classList.remove('nav-active');
+        const linkPath = link.getAttribute('href');
+        if (linkPath === currentPath || (currentPath.includes('testimonials') && linkPath.includes('testimonials'))) {
+          link.classList.add('nav-active');
+        }
+      });
+    }
+
+    // ============================================================
+    // MAIN DASHBOARD LOGIC
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      initSampleTestimonialsData();
+
+      let data = AN.Store.get(AN.STORAGE_KEYS.TESTIMONIALS) || [];
+      let services = AN.Store.get(AN.STORAGE_KEYS.SERVICES) || [];
+      let filterStatus = '';
+      let searchQuery = '';
+      let currentPage = 1;
+      const PER_PAGE = 8;
+
+      function save() { AN.Store.set(AN.STORAGE_KEYS.TESTIMONIALS, data); }
+
+      function getFiltered() {
+        let filtered = data;
+        if (filterStatus) {
+          filtered = filtered.filter(t => t.status === filterStatus);
+        }
+        if (searchQuery) {
+          const query = searchQuery.toLowerCase();
+          filtered = filtered.filter(t =>
+            t.name.toLowerCase().includes(query) ||
+            (t.service && t.service.toLowerCase().includes(query)) ||
+            t.review.toLowerCase().includes(query)
+          );
+        }
+        return filtered;
+      }
+
+      function renderTable() {
+        const filtered = getFiltered();
+        const pInfo = AN.paginate(filtered, currentPage, PER_PAGE);
+        const tbody = document.getElementById('testi-tbody');
+        const emptyDiv = document.getElementById('testi-empty');
+
+        if (pInfo.items.length === 0) {
+          tbody.innerHTML = '';
+          emptyDiv.style.display = 'block';
+        } else {
+          emptyDiv.style.display = 'none';
+          tbody.innerHTML = pInfo.items.map((t, idx) => `
+            <tr class="hover:bg-[#EAE0CF]/40 transition-colors ${t.status === 'Hidden' ? 'opacity-70' : ''}">
+              <td class="px-4 py-3 text-[#7288AE]">${pInfo.from + idx}</td>
+              <td class="px-4 py-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-[10px] font-bold flex-shrink-0">${escapeHtml(t.initial || t.name.slice(0, 2).toUpperCase())}</div>
+                  <div class="font-medium text-[#111844]">${escapeHtml(t.name)}</div>
+                </div>
+              </td>
+              <td class="px-4 py-3 text-[#4B5694]"><i class="fas fa-briefcase mr-1 text-[10px]"></i>${escapeHtml(t.service || '—')}</td>
+              <td class="px-4 py-3">${AN.starRating(t.rating)}</td>
+              <td class="px-4 py-3 max-w-xs"><div class="truncate max-w-[200px]" title="${escapeHtml(t.review)}"><i class="fas fa-quote-left mr-1 text-[#4B5694] text-[8px]"></i>${escapeHtml(t.review.substring(0, 80))}${t.review.length > 80 ? '...' : ''}</div></td>
+              <td class="px-4 py-3">${AN.statusBadge(t.status)}</td>
+              <td class="px-4 py-3 text-[#7288AE]"><i class="far fa-calendar-alt mr-1"></i>${t.date || '—'}</td>
+              <td class="px-4 py-3">
+                <div class="flex items-center gap-1.5">
+                  <button data-toggle="${t.id}" class="w-7 h-7 rounded flex items-center justify-center transition-colors ${t.status === 'Approved' ? 'bg-gray-100 text-gray-500 hover:bg-gray-200' : 'bg-green-100 text-green-600 hover:bg-green-200'}" title="${t.status === 'Approved' ? 'Hide' : 'Approve'}">
+                    <i class="fas ${t.status === 'Approved' ? 'fa-eye-slash' : 'fa-check-circle'} text-xs"></i>
+                  </button>
+                  <button data-edit="${t.id}" class="w-7 h-7 rounded flex items-center justify-center bg-amber-50 text-amber-600 hover:bg-amber-100 transition-colors" title="Edit">
+                    <i class="fas fa-edit text-xs"></i>
+                  </button>
+                  <button data-del="${t.id}" class="w-7 h-7 rounded flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 transition-colors" title="Delete">
+                    <i class="fas fa-trash-alt text-xs"></i>
+                  </button>
+                </div>
+              </td>
+             </>
+          `).join('');
+
+          // Attach event listeners to buttons
+          pInfo.items.forEach(t => {
+            const toggleBtn = tbody.querySelector(`[data-toggle="${t.id}"]`);
+            const editBtn = tbody.querySelector(`[data-edit="${t.id}"]`);
+            const delBtn = tbody.querySelector(`[data-del="${t.id}"]`);
+
+            if (toggleBtn) {
+              toggleBtn.addEventListener('click', () => {
+                if (t.status === 'Approved') t.status = 'Hidden';
+                else if (t.status === 'Hidden') t.status = 'Approved';
+                else if (t.status === 'Pending') t.status = 'Approved';
+                save();
+                renderTable();
+                AN.Toast.info(`${t.name}'s review ${t.status.toLowerCase()}`);
+              });
+            }
+            if (editBtn) editBtn.addEventListener('click', () => openEdit(t.id));
+            if (delBtn) {
+              delBtn.addEventListener('click', () => {
+                AN.confirmDelete(`${t.name}'s review`, () => {
+                  data = data.filter(i => i.id !== t.id);
+                  save();
+                  if (currentPage > 1 && getFiltered().length <= (currentPage - 1) * PER_PAGE) currentPage--;
+                  renderTable();
+                  AN.Toast.success('Testimonial deleted');
+                });
+              });
+            }
+          });
+        }
+
+        AN.renderPagination('testi-pagination', pInfo, p => { currentPage = p; renderTable(); });
+      }
+
+      function buildForm(t = null) {
+        const svcOpts = services.map(s => `<option ${t?.service === s.name ? 'selected' : ''}>${escapeHtml(s.name)}</option>`).join('');
+        return `<div class="space-y-3">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-user mr-1"></i>Client Name *</label>
+              <input name="name" value="${escapeHtml(t?.name || '')}" type="text" placeholder="Priya Sharma" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" required/>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-signature mr-1"></i>Initials (e.g., PS)</label>
+              <input name="initial" value="${escapeHtml(t?.initial || '')}" type="text" maxlength="3" placeholder="PS" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]"/>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-briefcase mr-1"></i>Service</label>
+              <select name="service" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+                <option value="">Select service...</option>
+                ${svcOpts}
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-star mr-1"></i>Rating</label>
+              <select name="rating" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+                ${[5, 4, 3, 2, 1].map(n => `<option ${(t?.rating || 5) === n ? 'selected' : ''}>${n} ★</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-align-left mr-1"></i>Review Text *</label>
+            <textarea name="review" rows="3" placeholder="Client's feedback..." class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694] resize-none" required>${escapeHtml(t?.review || '')}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-tag mr-1"></i>Status</label>
+            <select name="status" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+              <option ${t?.status === 'Approved' ? 'selected' : ''}>Approved</option>
+              <option ${t?.status === 'Hidden' ? 'selected' : ''}>Hidden</option>
+              <option ${t?.status === 'Pending' ? 'selected' : ''}>Pending</option>
+            </select>
+          </div>
+          <input name="id" type="hidden" value="${t?.id || ''}"/>
         </div>`;
+      }
 
-      card.querySelector('[data-toggle]').addEventListener('click', () => {
-        t.status = t.status === 'Approved' ? 'Hidden' : 'Approved';
-        save(); render(); Toast.info(`${t.name}'s review ${t.status.toLowerCase()}`);
+      function openEdit(id) {
+        const testimonial = data.find(t => t.id === id);
+        if (!testimonial) return;
+
+        showModal('Edit Testimonial', buildForm(testimonial), () => {
+          const nameInput = document.querySelector('#modal-body [name="name"]');
+          const reviewInput = document.querySelector('#modal-body [name="review"]');
+          const name = nameInput?.value.trim();
+          const review = reviewInput?.value.trim();
+
+          if (!name || !review) {
+            AN.Toast.error('Name and review are required');
+            return false;
+          }
+
+          testimonial.name = name;
+          testimonial.initial = document.querySelector('#modal-body [name="initial"]')?.value.trim().toUpperCase() || name.slice(0, 2).toUpperCase();
+          testimonial.service = document.querySelector('#modal-body [name="service"]')?.value || '';
+          testimonial.rating = parseInt(document.querySelector('#modal-body [name="rating"]')?.value) || 5;
+          testimonial.review = review;
+          testimonial.status = document.querySelector('#modal-body [name="status"]')?.value || 'Pending';
+
+          save();
+          renderTable();
+          AN.Toast.success('Testimonial updated!');
+        }, 'Save Changes');
+      }
+
+      // Add new testimonial
+      document.getElementById('btn-add-testi')?.addEventListener('click', () => {
+        showModal('Add Testimonial', buildForm(null), () => {
+          const nameInput = document.querySelector('#modal-body [name="name"]');
+          const reviewInput = document.querySelector('#modal-body [name="review"]');
+          const name = nameInput?.value.trim();
+          const review = reviewInput?.value.trim();
+
+          if (!name || !review) {
+            AN.Toast.error('Name and review are required');
+            return false;
+          }
+
+          const initial = document.querySelector('#modal-body [name="initial"]')?.value.trim().toUpperCase() || name.slice(0, 2).toUpperCase();
+          const newTestimonial = {
+            id: AN.genId(),
+            name: name,
+            initial: initial,
+            service: document.querySelector('#modal-body [name="service"]')?.value || '',
+            rating: parseInt(document.querySelector('#modal-body [name="rating"]')?.value) || 5,
+            review: review,
+            status: document.querySelector('#modal-body [name="status"]')?.value || 'Pending',
+            date: new Date().toISOString().split('T')[0]
+          };
+
+          data.unshift(newTestimonial);
+          save();
+          currentPage = 1;
+          renderTable();
+          AN.Toast.success('Testimonial added successfully!');
+        }, 'Add Testimonial');
       });
-      card.querySelector('[data-edit]').addEventListener('click', () => openEdit(t.id));
-      card.querySelector('[data-del]').addEventListener('click', () => {
-        confirmDelete(t.name + "'s review", () => { data = data.filter(i => i.id !== t.id); save(); render(); Toast.success('Deleted'); });
+
+      // Export CSV
+      document.getElementById('btn-export-csv')?.addEventListener('click', () => {
+        AN.exportCSV('testimonials_export.csv', ['name', 'service', 'rating', 'review', 'status', 'date'], getFiltered());
+        AN.Toast.success('Exported to CSV');
       });
-      grid.appendChild(card);
-    });
-  }
 
-  function buildForm(t = {}) {
-    const svcOpts = services.map(s => `<option${t.service===s.name?' selected':''}>${s.name}</option>`).join('');
-    return `<div class="space-y-3">
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="block text-xs font-medium text-[#4B5694] mb-1">Client Name *</label>
-          <input name="name" value="${t.name||''}" type="text" placeholder="Priya Sharma" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]"/>
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-[#4B5694] mb-1">Initials (e.g. AK)</label>
-          <input name="initial" value="${t.initial||''}" type="text" maxlength="3" placeholder="AK" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]"/>
-        </div>
-      </div>
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="block text-xs font-medium text-[#4B5694] mb-1">Service Used</label>
-          <select name="service" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]"><option value="">Select…</option>${svcOpts}</select>
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-[#4B5694] mb-1">Rating</label>
-          <select name="rating" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
-            ${[5,4,3,2,1].map(n=>`<option${(t.rating||5)===n?' selected':''}>${n} ★</option>`).join('')}
-          </select>
-        </div>
-      </div>
-      <div>
-        <label class="block text-xs font-medium text-[#4B5694] mb-1">Review Text *</label>
-        <textarea name="review" rows="3" placeholder="Client's review…" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694] resize-none">${t.review||''}</textarea>
-      </div>
-      <div>
-        <label class="block text-xs font-medium text-[#4B5694] mb-1">Status</label>
-        <select name="status" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
-          <option${(t.status||'Approved')==='Approved'?' selected':''}>Approved</option>
-          <option${t.status==='Hidden'?' selected':''}>Hidden</option>
-        </select>
-      </div>
-      <input name="id" type="hidden" value="${t.id||''}"/>
-    </div>`;
-  }
-
-  function openEdit(id) {
-    const t = data.find(x => x.id === id);
-    Modal.create({ title:'Edit Testimonial', body: buildForm(t), size:'md',
-      onConfirm: () => {
-        const f = document.querySelector('#an-modal');
-        Object.assign(t, {
-          name: f.querySelector('[name="name"]').value.trim(),
-          initial: f.querySelector('[name="initial"]').value.trim().toUpperCase(),
-          service: f.querySelector('[name="service"]').value,
-          rating: parseInt(f.querySelector('[name="rating"]').value),
-          review: f.querySelector('[name="review"]').value.trim(),
-          status: f.querySelector('[name="status"]').value,
+      // Search input
+      const searchInput = document.getElementById('testi-search');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value;
+          currentPage = 1;
+          renderTable();
         });
-        save(); render(); Toast.success('Testimonial updated!');
-      }, confirmText:'Save Changes'
-    });
-  }
+      }
 
-  document.getElementById('btn-add-testi').addEventListener('click', () => {
-    Modal.create({ title:'Add Testimonial', body: buildForm(), size:'md',
-      onConfirm: () => {
-        const f    = document.querySelector('#an-modal');
-        const name = f.querySelector('[name="name"]').value.trim();
-        const review = f.querySelector('[name="review"]').value.trim();
-        if (!name || !review) { Toast.error('Name and review are required'); return; }
-        data.unshift({ id: genId(), name, initial: f.querySelector('[name="initial"]').value.trim().toUpperCase() || name.slice(0,2).toUpperCase(), service: f.querySelector('[name="service"]').value, rating: parseInt(f.querySelector('[name="rating"]').value)||5, review, status: f.querySelector('[name="status"]').value });
-        save(); render(); Toast.success('Testimonial added!');
-      }, confirmText:'Add Testimonial'
-    });
-  });
+      // Filter buttons
+      const filterContainer = document.getElementById('testi-filter-btns');
+      if (filterContainer) {
+        filterContainer.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-filter]');
+          if (!btn) return;
+          filterStatus = btn.dataset.filter;
+          currentPage = 1;
+          document.querySelectorAll('.filter-btn').forEach(b => {
+            if (b === btn) {
+              b.className = 'filter-btn px-3 py-1.5 text-xs rounded-lg bg-[#111844] text-[#EAE0CF] font-medium transition-colors';
+            } else {
+              b.className = 'filter-btn px-3 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors';
+            }
+          });
+          renderTable();
+        });
+      }
 
-  // Filter buttons
-  document.getElementById('testi-filter-btns').addEventListener('click', e => {
-    const btn = e.target.closest('[data-filter]');
-    if (!btn) return;
-    filterStatus = btn.dataset.filter;
-    document.querySelectorAll('.filter-btn').forEach(b => {
-      b.className = b === btn
-        ? 'filter-btn px-3 py-1.5 text-xs rounded-lg bg-[#111844] text-[#EAE0CF] font-medium transition-colors'
-        : 'filter-btn px-3 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors';
-    });
-    render();
-  });
+      // Sidebar toggle functionality
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      let isCollapsed = false;
 
-  render();
-});
-</script>
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', () => {
+          if (window.innerWidth < 1024) {
+            sidebar.classList.toggle('sidebar-open');
+            overlay?.classList.toggle('hidden');
+          } else {
+            isCollapsed = !isCollapsed;
+            if (isCollapsed) {
+              sidebar.classList.add('sidebar-collapsed');
+              const mainWrapper = document.getElementById('main-wrapper');
+              mainWrapper.classList.add('main-expanded');
+              mainWrapper.style.marginLeft = '68px';
+            } else {
+              sidebar.classList.remove('sidebar-collapsed');
+              const mainWrapper = document.getElementById('main-wrapper');
+              mainWrapper.classList.remove('main-expanded');
+              mainWrapper.style.marginLeft = '';
+            }
+          }
+        });
+      }
+
+      overlay?.addEventListener('click', () => {
+        sidebar?.classList.remove('sidebar-open');
+        overlay.classList.add('hidden');
+      });
+
+      // User menu dropdown
+      const userMenuBtn = document.getElementById('user-menu-btn');
+      const userMenu = document.getElementById('user-menu');
+      if (userMenuBtn && userMenu) {
+        userMenuBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          userMenu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', (e) => {
+          if (!userMenuBtn.contains(e.target) && !userMenu.contains(e.target)) {
+            userMenu.classList.add('hidden');
+          }
+        });
+      }
+
+      // Notification button
+      document.getElementById('notif-btn')?.addEventListener('click', () => {
+        AN.Toast.info('No new notifications at this time');
+      });
+
+      setActiveNav();
+      renderTable();
+    });
+  </script>
 </body>
+
 </html>

@@ -7,6 +7,7 @@
   <title>Services — Astro Numerics Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config = { theme: { extend: { colors: { active: '#111844', border2: '#4B5694', bg: '#EAE0CF', hover2: '#7288AE', card: '#f5f0e8', dark: '#1a2155' } } } }</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -56,9 +57,8 @@
       color: #EAE0CF !important
     }
 
-    .drag-over {
-      border: 2px dashed #4B5694 !important;
-      background: #EAE0CF !important
+    .nav-active .nav-icon {
+      color: #EAE0CF !important
     }
 
     .toast-animate {
@@ -83,52 +83,60 @@
 
   <!-- SIDEBAR -->
   <aside id="sidebar"
-    class="fixed top-0 left-0 h-full w-[260px] bg-[#EDE9E6] z-[100] flex flex-col transition-all duration-300 overflow-hidden">
-    <div class="flex items-center gap-3 px-5 py-4 border-b border-[#4B5694]/30">
+    class="fixed top-0 left-0 h-full w-[260px] bg-[#f5f0e8] z-[100] flex flex-col transition-all duration-300 overflow-hidden shadow-lg">
+    <div class="flex items-center gap-3 px-5 h-16 border border-[#4B5694]/20 shadow-sm">
       <div
-        class="w-9 h-9 rounded-lg bg-[#EAE0CF] flex items-center justify-center text-[#111844] font-bold text-base flex-shrink-0">
-        ✦</div>
+        class="w-9 h-9 rounded-lg bg-[#111844] flex items-center justify-center text-[#EAE0CF] font-bold text-base flex-shrink-0">
+        <i class="fas fa-star-of-life text-sm"></i>
+      </div>
       <div class="sidebar-brand-text min-w-0">
         <div class="text-[#111844] font-semibold text-sm leading-tight truncate">Astro Numerics</div>
         <div class="text-[#7288AE] text-xs leading-tight">Admin Panel</div>
       </div>
     </div>
     <nav class="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
-      <div
-        class="sidebar-section-label px-3 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-[#4B5694]">
-        Main</div>
-      <a href="/index.html" data-nav-link
-        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
-          class="nav-icon text-base flex-shrink-0">⊞</span><span class="nav-label">Dashboard</span></a>
-      <a href="/inquiries.html" data-nav-link
-        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
-          class="nav-icon text-base flex-shrink-0">💬</span><span class="nav-label">Inquiries / Leads</span></a>
-      <div
-        class="sidebar-section-label px-3 pt-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-[#4B5694]">
-        Manage</div>
-      <a href="/services.html" data-nav-link
-        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
-          class="nav-icon text-base flex-shrink-0">✨</span><span class="nav-label">Services</span></a>
-      <a href="/testimonials.html" data-nav-link
-        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
-          class="nav-icon text-base flex-shrink-0">⭐</span><span class="nav-label">Testimonials</span></a>
-      <a href="/certificates.html" data-nav-link
-        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
-          class="nav-icon text-base flex-shrink-0">🏅</span><span class="nav-label">Certificates</span></a>
-      <a href="/courses.html" data-nav-link
-        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
-          class="nav-icon text-base flex-shrink-0">📚</span><span class="nav-label">Courses</span></a>
-      <a href="/products.html" data-nav-link
-        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm"><span
-          class="nav-icon text-base flex-shrink-0">💎</span><span class="nav-label">Products</span></a>
+
+      <a href="/index.html" data-nav-link="dashboard"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-chart-pie"></i></span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="/inquiries.html" data-nav-link="inquiries"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-comments"></i></span>
+        <span class="nav-label">Inquiries / Leads</span>
+      </a>
+
+      <a href="/services.html" data-nav-link="services"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-briefcase"></i></span>
+        <span class="nav-label">Services</span>
+      </a>
+      <a href="/testimonials.html" data-nav-link="testimonials"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5">
+          <i class="fas fa-star"></i>
+        </span>
+        <span class="nav-label">Testimonials</span>
+      </a>
+      <!-- <a href="/courses.html" data-nav-link="courses"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-graduation-cap"></i></span>
+        <span class="nav-label">Courses</span>
+      </a> -->
+      <a href="/products.html" data-nav-link="products"
+        class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+        <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-box"></i></span>
+        <span class="nav-label">Products</span>
+      </a>
     </nav>
-    <div class="px-4 py-3 border-t border-[#4B5694]/30">
+    <div class="px-4 py-3 border-t border-[#4B5694]/20 bg-[#EAE0CF]/30">
       <div class="flex items-center gap-3">
         <div
-          class="w-8 h-8 rounded-full bg-[#4B5694] flex items-center justify-center text-[#EAE0CF] text-xs font-bold flex-shrink-0">
+          class="w-8 h-8 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-xs font-bold flex-shrink-0">
           AD</div>
         <div class="sidebar-brand-text min-w-0">
-          <div class="text-[#EAE0CF] text-xs font-medium truncate">Admin</div>
+          <div class="text-[#111844] text-xs font-medium truncate">Admin</div>
           <div class="text-[#7288AE] text-xs truncate">admin@astronumerics.in</div>
         </div>
       </div>
@@ -143,41 +151,39 @@
       class="sticky top-0 z-[200] h-16 bg-[#f5f0e8] border-b border-[#4B5694]/20 flex items-center justify-between px-5 shadow-sm">
       <div class="flex items-center gap-4">
         <button id="sidebar-toggle"
-          class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors"><svg
-            width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg></button>
+          class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors">
+          <i class="fas fa-bars text-lg"></i>
+        </button>
         <div>
           <h1 class="text-sm font-semibold text-[#111844]">Service Manager</h1>
-          <p class="text-xs text-[#7288AE]">Manage website services & display order</p>
+          <p class="text-xs text-[#7288AE]">Manage website services</p>
         </div>
       </div>
       <div class="flex items-center gap-2">
         <button id="notif-btn"
-          class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors relative"><svg
-            width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-          </svg></button>
-        <div class="relative"><button id="user-menu-btn"
+          class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors relative">
+          <i class="fas fa-bell text-base"></i>
+        </button>
+        <div class="relative">
+          <button id="user-menu-btn"
             class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#4B5694]/10 transition-colors">
             <div
               class="w-7 h-7 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-xs font-bold">
-              AD</div><span class="text-xs font-medium text-[#111844] hidden sm:block">Admin</span><svg width="12"
-              height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
+              AD</div>
+            <span class="text-xs font-medium text-[#111844] hidden sm:block">Admin</span>
+            <i class="fas fa-chevron-down text-[10px] text-[#4B5694]"></i>
           </button>
           <div id="user-menu"
             class="hidden absolute right-0 top-full mt-1 w-44 bg-[#f5f0e8] border border-[#4B5694]/20 rounded-xl shadow-lg py-1 z-50">
             <a href="#"
-              class="flex items-center gap-2 px-4 py-2 text-xs text-[#111844] hover:bg-[#7288AE]/10 transition-colors">👤
-              Profile</a>
-            <div class="border-t border-[#4B5694]/10 my-1"></div><a href="#"
-              class="flex items-center gap-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition-colors">🚪
-              Logout</a>
+              class="flex items-center gap-2 px-4 py-2 text-xs text-[#111844] hover:bg-[#7288AE]/10 transition-colors">
+              <i class="fas fa-user-circle w-4"></i> Profile
+            </a>
+            <div class="border-t border-[#4B5694]/10 my-1"></div>
+            <a href="#"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition-colors">
+              <i class="fas fa-sign-out-alt w-4"></i> Logout
+            </a>
           </div>
         </div>
       </div>
@@ -185,14 +191,35 @@
 
     <main class="flex-1 p-5 space-y-4">
       <div class="flex items-center justify-between">
-        <p class="text-xs text-[#7288AE]">Drag cards to reorder display on website</p>
+        <p class="text-xs text-[#7288AE]"><i class="fas fa-info-circle mr-1"></i> Manage your services below</p>
         <button id="btn-add-service"
-          class="flex items-center gap-2 px-4 py-2 bg-[#111844] text-[#EAE0CF] text-xs font-medium rounded-lg hover:bg-[#1d2a70] transition-colors shadow-sm">+
-          Add Service</button>
+          class="flex items-center gap-2 px-4 py-2 bg-[#111844] text-[#EAE0CF] text-xs font-medium rounded-lg hover:bg-[#1d2a70] transition-colors shadow-sm">
+          <i class="fas fa-plus text-xs"></i> Add Service
+        </button>
       </div>
 
-      <!-- Service Cards Grid -->
-      <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <!-- Services Table -->
+      <div class="bg-card rounded-xl border border-[#4B5694]/20 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead>
+              <tr class="bg-[#EAE0CF]/60 border-b border-[#4B5694]/15">
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">#</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Icon</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Service Name</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Description</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Order</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Status</th>
+                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="services-tbody" class="divide-y divide-[#4B5694]/10"></tbody>
+          </table>
+        </div>
+        <div id="services-empty" class="hidden py-10 text-center text-xs text-[#7288AE]">
+          <i class="fas fa-inbox mr-2"></i> No services found. Click "Add Service" to get started.
+        </div>
+      </div>
     </main>
   </div>
 
@@ -222,17 +249,17 @@
     // ============================================================
     // COMPLETE SAMPLE DATA MODULE (with auto-initialization)
     // ============================================================
-    const SAMPLE_DATA_VERSION_SVC = 'astro_svc_v1';
+    const SAMPLE_DATA_VERSION_SVC = 'astro_svc_v3';
 
-    // Rich sample services data
+    // Rich sample services data with Font Awesome icons
     const SAMPLE_SERVICES = [
-      { id: 'svc_1', name: 'Numerology Reading', icon: '🔢', description: 'Personalized numerology chart based on your birth date and name. Get insights into life path, destiny, and soul urge numbers.', active: true, order: 1 },
-      { id: 'svc_2', name: 'Vedic Astrology', icon: '🌟', description: 'Kundli analysis and planetary predictions using ancient Vedic techniques. Career, marriage, and health insights.', active: true, order: 2 },
-      { id: 'svc_3', name: 'Gemstone Recommendation', icon: '💎', description: 'Expert guidance on healing stones and gemstones based on your planetary alignment. Authentic stones suggested.', active: true, order: 3 },
-      { id: 'svc_4', name: 'Tarot Card Reading', icon: '🃏', description: 'Intuitive tarot sessions for clarity on love, career, and spiritual growth. 3-card and Celtic cross spreads.', active: true, order: 4 },
-      { id: 'svc_5', name: 'Vaastu Consultation', icon: '🏠', description: 'Energy alignment for homes and offices. Improve prosperity, health, and relationships through spatial harmony.', active: true, order: 5 },
-      { id: 'svc_6', name: 'Palmistry Analysis', icon: '✋', description: 'Detailed palm reading revealing life line, heart line, and fate line insights. Understand your life path better.', active: false, order: 6 },
-      { id: 'svc_7', name: 'Meditation Coaching', icon: '🧘', description: 'Personalized meditation techniques for stress relief and spiritual awakening. Guided sessions available.', active: false, order: 7 }
+      { id: 'svc_1', name: 'Numerology Reading', icon: 'fa-chart-line', description: 'Personalized numerology chart based on your birth date and name. Get insights into life path, destiny, and soul urge numbers.', active: true, order: 1 },
+      { id: 'svc_2', name: 'Vedic Astrology', icon: 'fa-sun', description: 'Kundli analysis and planetary predictions using ancient Vedic techniques. Career, marriage, and health insights.', active: true, order: 2 },
+      { id: 'svc_3', name: 'Gemstone Recommendation', icon: 'fa-gem', description: 'Expert guidance on healing stones and gemstones based on your planetary alignment. Authentic stones suggested.', active: true, order: 3 },
+      { id: 'svc_4', name: 'Tarot Card Reading', icon: 'fa-crown', description: 'Intuitive tarot sessions for clarity on love, career, and spiritual growth. 3-card and Celtic cross spreads.', active: true, order: 4 },
+      { id: 'svc_5', name: 'Vaastu Consultation', icon: 'fa-building', description: 'Energy alignment for homes and offices. Improve prosperity, health, and relationships through spatial harmony.', active: true, order: 5 },
+      { id: 'svc_6', name: 'Palmistry Analysis', icon: 'fa-hand-peace', description: 'Detailed palm reading revealing life line, heart line, and fate line insights. Understand your life path better.', active: false, order: 6 },
+      { id: 'svc_7', name: 'Meditation Coaching', icon: 'fa-brain', description: 'Personalized meditation techniques for stress relief and spiritual awakening. Guided sessions available.', active: false, order: 7 }
     ];
 
     // Initialize sample data in localStorage
@@ -271,9 +298,9 @@
         if (!container) return;
         const toast = document.createElement('div');
         const bgColor = type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : type === 'info' ? 'bg-blue-600' : 'bg-gray-700';
-        const icon = type === 'success' ? '✓' : type === 'error' ? '⚠' : type === 'info' ? 'ℹ' : '•';
+        const icon = type === 'success' ? '<i class="fas fa-check-circle mr-1"></i>' : type === 'error' ? '<i class="fas fa-exclamation-triangle mr-1"></i>' : '<i class="fas fa-info-circle mr-1"></i>';
         toast.className = `${bgColor} text-white text-xs px-4 py-2 rounded-lg shadow-lg toast-animate flex items-center gap-2`;
-        toast.innerHTML = `<span>${icon}</span> ${message}`;
+        toast.innerHTML = `${icon} ${message}`;
         container.appendChild(toast);
         setTimeout(() => toast.remove(), 2500);
       },
@@ -282,26 +309,11 @@
       info: (msg) => AN.Toast.show(msg, 'info')
     };
 
-    AN.makeToggle = (initialChecked, onChange) => {
-      const label = document.createElement('label');
-      label.className = 'relative inline-flex items-center cursor-pointer';
-      const input = document.createElement('input');
-      input.type = 'checkbox';
-      input.className = 'sr-only peer';
-      input.checked = initialChecked;
-      const div = document.createElement('div');
-      div.className = "w-9 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#111844]";
-      label.appendChild(input);
-      label.appendChild(div);
-      input.addEventListener('change', (e) => onChange(e.target.checked));
-      return label;
-    };
-
     AN.confirmDelete = (name, callback) => {
       const modal = document.getElementById('modal-root');
       if (!modal) return;
       document.getElementById('modal-title').innerText = 'Confirm Delete';
-      document.getElementById('modal-body').innerHTML = `<p class="text-sm text-[#111844]">Are you sure you want to delete "<strong>${escapeHtml(name)}</strong>"? This action cannot be undone.</p>`;
+      document.getElementById('modal-body').innerHTML = `<p class="text-sm text-[#111844]"><i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>Are you sure you want to delete "<strong>${escapeHtml(name)}</strong>"? This action cannot be undone.</p>`;
       modal.style.display = 'flex';
       const confirmBtn = document.getElementById('modal-confirm');
       const cancelBtn = document.getElementById('modal-cancel');
@@ -321,7 +333,6 @@
     function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
 
     // Modal handler
-    let currentModalConfirmCallback = null;
     function showModal(title, bodyHtml, onConfirm, confirmText = 'Confirm') {
       const modal = document.getElementById('modal-root');
       if (!modal) return;
@@ -347,6 +358,18 @@
       closeBtn.addEventListener('click', cleanup);
     }
 
+    // Set active navigation based on current page
+    function setActiveNav() {
+      const currentPath = window.location.pathname;
+      document.querySelectorAll('[data-nav-link]').forEach(link => {
+        link.classList.remove('nav-active');
+        const linkPath = link.getAttribute('href');
+        if (linkPath === currentPath || (currentPath.includes('services') && linkPath.includes('services'))) {
+          link.classList.add('nav-active');
+        }
+      });
+    }
+
     // ============================================================
     // MAIN DASHBOARD LOGIC
     // ============================================================
@@ -365,127 +388,165 @@
         AN.Store.set(AN.STORAGE_KEYS.SERVICES, data);
       }
 
-      function render() {
-        const grid = document.getElementById('services-grid');
-        if (!grid) return;
-        grid.innerHTML = '';
+      function updateOrderNumbers() {
+        const sorted = [...data].sort((a, b) => (a.order || 999) - (b.order || 999));
+        sorted.forEach((item, idx) => {
+          item.order = idx + 1;
+        });
+        save();
+      }
+
+      function renderTable() {
+        const tbody = document.getElementById('services-tbody');
+        const emptyDiv = document.getElementById('services-empty');
+
+        if (!tbody) return;
+
         const sorted = [...data].sort((a, b) => (a.order || 999) - (b.order || 999));
 
-        sorted.forEach(svc => {
-          const card = document.createElement('div');
-          card.className = 'bg-card rounded-xl border border-[#4B5694]/20 shadow-sm p-4 cursor-grab active:cursor-grabbing transition-all duration-150 hover:shadow-md';
-          card.draggable = true;
-          card.dataset.id = svc.id;
-
-          const toggle = AN.makeToggle(svc.active === true, (checked) => {
-            svc.active = checked;
-            save();
-            AN.Toast.info(`${svc.name} ${checked ? 'enabled' : 'disabled'}`);
-          });
-
-          card.innerHTML = `
-        <div class="flex items-start justify-between mb-3">
-          <div class="flex items-center gap-2">
-            <span class="text-2xl">${svc.icon || '✨'}</span>
-            <div>
-              <div class="font-semibold text-sm text-[#111844]">${escapeHtml(svc.name)}</div>
-              <div class="text-xs text-[#7288AE]">Order #${svc.order || '—'}</div>
-            </div>
-          </div>
-          <div class="toggle-wrap"></div>
-        </div>
-        <p class="text-xs text-[#4B5694] mb-4 leading-relaxed">${escapeHtml(svc.description || '—')}</p>
-        <div class="flex items-center gap-2 pt-3 border-t border-[#4B5694]/10">
-          <button data-edit="${svc.id}" class="flex-1 py-1.5 text-xs rounded-lg bg-[#111844]/10 text-[#111844] hover:bg-[#111844]/20 transition-colors">Edit</button>
-          <button data-del="${svc.id}" class="flex-1 py-1.5 text-xs rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors">Delete</button>
-        </div>`;
-
-          const toggleWrap = card.querySelector('.toggle-wrap');
-          if (toggleWrap) toggleWrap.appendChild(toggle);
-
-          const editBtn = card.querySelector('[data-edit]');
-          const delBtn = card.querySelector('[data-del]');
-          if (editBtn) editBtn.addEventListener('click', () => openEdit(svc.id));
-          if (delBtn) delBtn.addEventListener('click', () => {
-            AN.confirmDelete(svc.name, () => {
-              data = data.filter(s => s.id !== svc.id);
-              // Reorder remaining services
-              data.forEach((s, idx) => s.order = idx + 1);
-              save();
-              render();
-              AN.Toast.success('Service deleted');
-            });
-          });
-
-          // Drag & Drop functionality
-          card.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('text/plain', svc.id);
-            card.classList.add('opacity-50');
-          });
-          card.addEventListener('dragend', () => card.classList.remove('opacity-50'));
-          card.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            card.classList.add('drag-over');
-          });
-          card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
-          card.addEventListener('drop', (e) => {
-            e.preventDefault();
-            card.classList.remove('drag-over');
-            const fromId = e.dataTransfer.getData('text/plain');
-            const toId = svc.id;
-            if (fromId === toId) return;
-
-            const fromIdx = data.findIndex(s => s.id === fromId);
-            const toIdx = data.findIndex(s => s.id === toId);
-            if (fromIdx === -1 || toIdx === -1) return;
-
-            const [moved] = data.splice(fromIdx, 1);
-            data.splice(toIdx, 0, moved);
-            data.forEach((s, idx) => s.order = idx + 1);
-            save();
-            render();
-            AN.Toast.success('Order updated');
-          });
-
-          grid.appendChild(card);
-        });
-
-        // Show empty state if no services
-        if (data.length === 0) {
-          grid.innerHTML = `<div class="col-span-full text-center py-12 text-[#7288AE] text-sm">No services added yet. Click "+ Add Service" to get started.</div>`;
+        if (sorted.length === 0) {
+          tbody.innerHTML = '';
+          emptyDiv.style.display = 'block';
+          return;
         }
+
+        emptyDiv.style.display = 'none';
+        tbody.innerHTML = sorted.map((svc, idx) => `
+          <tr data-id="${svc.id}" class="hover:bg-[#EAE0CF]/40 transition-colors">
+            <td class="px-4 py-3 text-[#7288AE]">${idx + 1}</td>
+            <td class="px-4 py-3">
+              <i class="fas ${svc.icon || 'fa-star'} text-base text-[#4B5694] w-5 text-center"></i>
+            </td>
+            <td class="px-4 py-3 font-medium text-[#111844]">${escapeHtml(svc.name)}</td>
+            <td class="px-4 py-3 text-[#4B5694] max-w-xs">
+              <div class="truncate max-w-[250px]" title="${escapeHtml(svc.description || '')}">
+                ${escapeHtml(svc.description ? svc.description.substring(0, 60) : '—')}${svc.description && svc.description.length > 60 ? '...' : ''}
+              </div>
+            </td>
+            <td class="px-4 py-3 text-center">
+              <select data-order="${svc.id}" class="order-select w-16 px-2 py-1 text-xs rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+                ${sorted.map((_, optIdx) => `<option value="${optIdx + 1}" ${svc.order === optIdx + 1 ? 'selected' : ''}>${optIdx + 1}</option>`).join('')}
+              </select>
+            </td>
+            <td class="px-4 py-3">
+              <button data-toggle="${svc.id}" class="toggle-status-btn px-2.5 py-1 rounded-full text-[10px] font-medium transition-colors ${svc.active ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}">
+                <i class="fas ${svc.active ? 'fa-toggle-on' : 'fa-toggle-off'} mr-1"></i>
+                ${svc.active ? 'Active' : 'Inactive'}
+              </button>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-1.5">
+                <button data-edit="${svc.id}" class="w-7 h-7 rounded flex items-center justify-center bg-amber-50 text-amber-600 hover:bg-amber-100 transition-colors" title="Edit">
+                  <i class="fas fa-edit text-xs"></i>
+                </button>
+                <button data-del="${svc.id}" class="w-7 h-7 rounded flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 transition-colors" title="Delete">
+                  <i class="fas fa-trash-alt text-xs"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+
+        // Attach event listeners
+        sorted.forEach(svc => {
+          const toggleBtn = tbody.querySelector(`[data-toggle="${svc.id}"]`);
+          const editBtn = tbody.querySelector(`[data-edit="${svc.id}"]`);
+          const delBtn = tbody.querySelector(`[data-del="${svc.id}"]`);
+          const orderSelect = tbody.querySelector(`[data-order="${svc.id}"]`);
+
+          if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+              svc.active = !svc.active;
+              save();
+              renderTable();
+              AN.Toast.info(`${svc.name} ${svc.active ? 'activated' : 'deactivated'}`);
+            });
+          }
+          if (editBtn) editBtn.addEventListener('click', () => openEdit(svc.id));
+          if (delBtn) {
+            delBtn.addEventListener('click', () => {
+              AN.confirmDelete(svc.name, () => {
+                data = data.filter(s => s.id !== svc.id);
+                updateOrderNumbers();
+                renderTable();
+                AN.Toast.success('Service deleted');
+              });
+            });
+          }
+          if (orderSelect) {
+            orderSelect.addEventListener('change', (e) => {
+              const newOrder = parseInt(e.target.value);
+              const currentOrder = svc.order;
+
+              if (newOrder !== currentOrder) {
+                if (newOrder < currentOrder) {
+                  // Moving up: shift items down
+                  data.forEach(item => {
+                    if (item.order >= newOrder && item.order < currentOrder) {
+                      item.order++;
+                    }
+                  });
+                } else {
+                  // Moving down: shift items up
+                  data.forEach(item => {
+                    if (item.order <= newOrder && item.order > currentOrder) {
+                      item.order--;
+                    }
+                  });
+                }
+                svc.order = newOrder;
+                updateOrderNumbers();
+                renderTable();
+                AN.Toast.success('Order updated successfully');
+              }
+            });
+          }
+        });
       }
 
       function buildForm(svc = null) {
-        const isEdit = svc !== null;
-        const currentOrder = svc ? svc.order : (data.length + 1);
-        return `<div class="space-y-3">
-      <div>
-        <label class="block text-xs font-medium text-[#4B5694] mb-1">Service Name *</label>
-        <input name="name" value="${escapeHtml(svc?.name || '')}" type="text" placeholder="e.g., Tarot Reading" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" />
-      </div>
-      <div>
-        <label class="block text-xs font-medium text-[#4B5694] mb-1">Icon (emoji)</label>
-        <input name="icon" value="${svc?.icon || ''}" type="text" placeholder="🃏" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" />
-      </div>
-      <div>
-        <label class="block text-xs font-medium text-[#4B5694] mb-1">Short Description</label>
-        <textarea name="description" rows="3" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694] resize-none">${escapeHtml(svc?.description || '')}</textarea>
-      </div>
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="block text-xs font-medium text-[#4B5694] mb-1">Sort Order</label>
-          <input name="order" value="${currentOrder}" type="number" min="1" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" />
-        </div>
-        <div class="flex items-end pb-2">
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input name="active" type="checkbox" ${svc?.active !== false ? 'checked' : ''} class="w-4 h-4 accent-[#111844]" />
-            <span class="text-xs text-[#4B5694]">Active (show on site)</span>
-          </label>
-        </div>
-      </div>
-      <input name="id" type="hidden" value="${svc?.id || ''}" />
-    </div>`;
+        const iconOptions = [
+          'fa-chart-line', 'fa-sun', 'fa-gem', 'fa-crown', 'fa-building',
+          'fa-hand-peace', 'fa-brain', 'fa-star', 'fa-moon', 'fa-cloud-sun',
+          'fa-feather-alt', 'fa-eye', 'fa-fire', 'fa-water', 'fa-tree'
+        ];
+        const iconOptionsHtml = iconOptions.map(icon =>
+          `<option value="${icon}" ${svc?.icon === icon ? 'selected' : ''}>${icon.replace('fa-', '').replace(/-/g, ' ')}</option>`
+        ).join('');
+
+        return `
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-tag mr-1"></i>Service Name *</label>
+              <input name="name" value="${escapeHtml(svc?.name || '')}" type="text" placeholder="e.g., Tarot Reading" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" required/>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-icons mr-1"></i>Icon (Font Awesome)</label>
+              <select name="icon" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+                <option value="fa-star">fa-star (Default)</option>
+                ${iconOptionsHtml}
+              </select>
+              <p class="text-[10px] text-[#7288AE] mt-1"><i class="fas fa-info-circle mr-1"></i>Choose from Font Awesome 6 free icons</p>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-align-left mr-1"></i>Short Description</label>
+              <textarea name="description" rows="3" placeholder="Service description..." class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694] resize-none">${escapeHtml(svc?.description || '')}</textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-sort-numeric-down mr-1"></i>Sort Order</label>
+                <input name="order" value="${svc ? svc.order : (data.length + 1)}" type="number" min="1" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" />
+              </div>
+              <div class="flex items-end pb-2">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input name="active" type="checkbox" ${svc?.active !== false ? 'checked' : ''} class="w-4 h-4 accent-[#111844]" />
+                  <span class="text-xs text-[#4B5694]"><i class="fas fa-toggle-on mr-1"></i>Active (show on site)</span>
+                </label>
+              </div>
+            </div>
+            <input name="id" type="hidden" value="${svc?.id || ''}" />
+          </div>
+        `;
       }
 
       function openEdit(id) {
@@ -497,18 +558,35 @@
           const name = nameInput?.value.trim();
           if (!name) { AN.Toast.error('Service name is required'); return false; }
 
+          const newOrder = parseInt(document.querySelector('#modal-body [name="order"]')?.value);
+
           svc.name = name;
-          svc.icon = document.querySelector('#modal-body [name="icon"]')?.value.trim() || '';
+          svc.icon = document.querySelector('#modal-body [name="icon"]')?.value || 'fa-star';
           svc.description = document.querySelector('#modal-body [name="description"]')?.value.trim() || '';
-          svc.order = parseInt(document.querySelector('#modal-body [name="order"]')?.value) || svc.order;
           svc.active = document.querySelector('#modal-body [name="active"]')?.checked === true;
 
-          // Reorder all services based on updated order values
-          data.sort((a, b) => (a.order || 999) - (b.order || 999));
-          data.forEach((s, idx) => s.order = idx + 1);
+          if (newOrder && newOrder !== svc.order) {
+            const oldOrder = svc.order;
+            if (newOrder < oldOrder) {
+              data.forEach(item => {
+                if (item.order >= newOrder && item.order < oldOrder && item.id !== svc.id) {
+                  item.order++;
+                }
+              });
+            } else if (newOrder > oldOrder) {
+              data.forEach(item => {
+                if (item.order <= newOrder && item.order > oldOrder && item.id !== svc.id) {
+                  item.order--;
+                }
+              });
+            }
+            svc.order = newOrder;
+            updateOrderNumbers();
+          } else {
+            save();
+          }
 
-          save();
-          render();
+          renderTable();
           AN.Toast.success('Service updated!');
         }, 'Save Changes');
       }
@@ -524,15 +602,15 @@
           const newService = {
             id: AN.genId(),
             name: name,
-            icon: document.querySelector('#modal-body [name="icon"]')?.value.trim() || '✨',
+            icon: document.querySelector('#modal-body [name="icon"]')?.value || 'fa-star',
             description: document.querySelector('#modal-body [name="description"]')?.value.trim() || '',
             order: newOrder,
             active: document.querySelector('#modal-body [name="active"]')?.checked === true
           };
 
           data.push(newService);
-          save();
-          render();
+          updateOrderNumbers();
+          renderTable();
           AN.Toast.success('Service added successfully!');
         }, 'Add Service');
       });
@@ -541,6 +619,7 @@
       const sidebarToggle = document.getElementById('sidebar-toggle');
       const sidebar = document.getElementById('sidebar');
       const overlay = document.getElementById('sidebar-overlay');
+      let isCollapsed = false;
 
       if (sidebarToggle) {
         sidebarToggle.addEventListener('click', () => {
@@ -548,14 +627,15 @@
             sidebar.classList.toggle('sidebar-open');
             overlay?.classList.toggle('hidden');
           } else {
-            const mainWrapper = document.getElementById('main-wrapper');
-            sidebar.classList.toggle('sidebar-collapsed');
-            if (sidebar.classList.contains('sidebar-collapsed')) {
-              mainWrapper?.classList.add('main-expanded');
-              mainWrapper && (mainWrapper.style.marginLeft = '68px');
+            isCollapsed = !isCollapsed;
+            if (isCollapsed) {
+              sidebar.classList.add('sidebar-collapsed');
+              document.getElementById('main-wrapper').classList.add('main-expanded');
+              document.getElementById('main-wrapper').style.marginLeft = '68px';
             } else {
-              mainWrapper?.classList.remove('main-expanded');
-              mainWrapper && (mainWrapper.style.marginLeft = '');
+              sidebar.classList.remove('sidebar-collapsed');
+              document.getElementById('main-wrapper').classList.remove('main-expanded');
+              document.getElementById('main-wrapper').style.marginLeft = '';
             }
           }
         });
@@ -586,7 +666,8 @@
         AN.Toast.info('No new notifications at this time');
       });
 
-      render();
+      setActiveNav();
+      renderTable();
     });
   </script>
 </body>

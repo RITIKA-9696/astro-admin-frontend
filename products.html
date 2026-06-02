@@ -1,14 +1,786 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - Astro Numerics Admin</title>
-    <link rel="stylesheet" href="css/admin.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products — Astro Numerics Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { active: '#111844', border2: '#4B5694', bg: '#EAE0CF', hover2: '#7288AE', card: '#f5f0e8', dark: '#1a2155' } } } }</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif
+        }
+
+        .sidebar-collapsed {
+            width: 68px !important
+        }
+
+        .sidebar-collapsed .nav-label,
+        .sidebar-collapsed .sidebar-brand-text,
+        .sidebar-collapsed .sidebar-section-label {
+            display: none !important
+        }
+
+        .sidebar-collapsed .nav-item {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0
+        }
+
+        .sidebar-collapsed .nav-icon {
+            margin: 0
+        }
+
+        .main-expanded {
+            margin-left: 68px !important
+        }
+
+        @media(max-width:1023px) {
+            #sidebar {
+                transform: translateX(-100%)
+            }
+
+            #sidebar.sidebar-open {
+                transform: translateX(0)
+            }
+
+            #main-wrapper {
+                margin-left: 0 !important
+            }
+        }
+
+        .nav-active {
+            background: #111844 !important;
+            color: #EAE0CF !important
+        }
+
+        .nav-active .nav-icon {
+            color: #EAE0CF !important
+        }
+
+        .toast-animate {
+            animation: slideIn 0.2s ease-out
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="app-container"></div>
-    <script src="js/common.js"></script>
-    <script src="js/products.js"></script>
+
+<body class="bg-[#EAE0CF] text-[#111844] min-h-screen">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar"
+        class="fixed top-0 left-0 h-full w-[260px] bg-[#f5f0e8] z-[100] flex flex-col transition-all duration-300 overflow-hidden shadow-lg">
+        <div class="flex items-center gap-3 px-5 h-16 border border-[#4B5694]/20 shadow-sm">
+            <div
+                class="w-9 h-9 rounded-lg bg-[#111844] flex items-center justify-center text-[#EAE0CF] font-bold text-base flex-shrink-0">
+                <i class="fas fa-star-of-life text-sm"></i>
+            </div>
+            <div class="sidebar-brand-text min-w-0">
+                <div class="text-[#111844] font-semibold text-sm leading-tight truncate">Astro Numerics</div>
+                <div class="text-[#7288AE] text-xs leading-tight">Admin Panel</div>
+            </div>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
+            
+            <a href="/index.html" data-nav-link="dashboard"
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+                <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-chart-pie"></i></span>
+                <span class="nav-label">Dashboard</span>
+            </a>
+            <a href="/inquiries.html" data-nav-link="inquiries"
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+                <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-comments"></i></span>
+                <span class="nav-label">Inquiries / Leads</span>
+            </a>
+            
+            <a href="/services.html" data-nav-link="services"
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+                <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-briefcase"></i></span>
+                <span class="nav-label">Services</span>
+            </a>
+
+            <a href="/testimonials.html" data-nav-link="testimonials"
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+                <span class="nav-icon text-base flex-shrink-0 w-5">
+                    <i class="fas fa-star"></i>
+                </span>
+                <span class="nav-label">Testimonials</span>
+            </a>
+            <!-- <a href="/certificates.html" data-nav-link="certificates"
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+                <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-certificate"></i></span>
+                <span class="nav-label">Certificates</span>
+            </a> -->
+            <!-- <a href="/courses.html" data-nav-link="courses"
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+                <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-graduation-cap"></i></span>
+                <span class="nav-label">Courses</span>
+            </a> -->
+            <a href="/products.html" data-nav-link="products"
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111844]/70 hover:bg-[#7288AE]/20 hover:text-[#111844] transition-colors duration-150 text-sm border-b border-[#4B5694]/20 shadow-sm">
+                <span class="nav-icon text-base flex-shrink-0 w-5"><i class="fas fa-box"></i></span>
+                <span class="nav-label">Products</span>
+            </a>
+        </nav>
+        <div class="px-4 py-3 border-t border-[#4B5694]/20 bg-[#EAE0CF]/30">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-xs font-bold flex-shrink-0">
+                    AD</div>
+                <div class="sidebar-brand-text min-w-0">
+                    <div class="text-[#111844] text-xs font-medium truncate">Admin</div>
+                    <div class="text-[#7288AE] text-xs truncate">admin@astronumerics.in</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div id="sidebar-overlay" class="hidden fixed inset-0 bg-[#111844]/50 z-[90] lg:hidden"></div>
+
+    <div id="main-wrapper" class="ml-[260px] flex flex-col min-h-screen transition-all duration-300">
+        <header
+            class="sticky top-0 z-[200] h-16 bg-[#f5f0e8] border-b border-[#4B5694]/20 flex items-center justify-between px-5 shadow-sm">
+            <div class="flex items-center gap-4">
+                <button id="sidebar-toggle"
+                    class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+                <div>
+                    <h1 class="text-sm font-semibold text-[#111844]">Product Manager</h1>
+                    <p class="text-xs text-[#7288AE]">Manage spiritual & wellness products inventory</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="notif-btn"
+                    class="w-9 h-9 flex items-center justify-center rounded-lg text-[#4B5694] hover:bg-[#4B5694]/10 transition-colors relative">
+                    <i class="fas fa-bell text-base"></i>
+                </button>
+                <div class="relative">
+                    <button id="user-menu-btn"
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#4B5694]/10 transition-colors">
+                        <div
+                            class="w-7 h-7 rounded-full bg-[#111844] flex items-center justify-center text-[#EAE0CF] text-xs font-bold">
+                            AD</div>
+                        <span class="text-xs font-medium text-[#111844] hidden sm:block">Admin</span>
+                        <i class="fas fa-chevron-down text-[10px] text-[#4B5694]"></i>
+                    </button>
+                    <div id="user-menu"
+                        class="hidden absolute right-0 top-full mt-1 w-44 bg-[#f5f0e8] border border-[#4B5694]/20 rounded-xl shadow-lg py-1 z-50">
+                        <a href="#"
+                            class="flex items-center gap-2 px-4 py-2 text-xs text-[#111844] hover:bg-[#7288AE]/10 transition-colors">
+                            <i class="fas fa-user-circle w-4"></i> Profile
+                        </a>
+                        <div class="border-t border-[#4B5694]/10 my-1"></div>
+                        <a href="#"
+                            class="flex items-center gap-2 px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition-colors">
+                            <i class="fas fa-sign-out-alt w-4"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 p-5 space-y-4">
+            <!-- Top bar: stats + add btn -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap gap-3" id="product-stats"></div>
+                <button id="btn-add-product"
+                    class="flex items-center gap-2 px-4 py-2 bg-[#111844] text-[#EAE0CF] text-xs font-medium rounded-lg hover:bg-[#1d2a70] transition-colors shadow-sm">
+                    <i class="fas fa-plus text-xs"></i> Add Product
+                </button>
+            </div>
+
+            <!-- Filter bar -->
+            <div class="bg-card rounded-xl border border-[#4B5694]/20 shadow-sm p-3 flex flex-wrap gap-3 items-center">
+                <input id="product-search" type="text" placeholder="Search by name, category or price..."
+                    class="flex-1 min-w-[200px] text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694] transition-colors" />
+                <select id="filter-category"
+                    class="text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+                    <option value="">All Categories</option>
+                </select>
+                <select id="filter-stock"
+                    class="text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+                    <option value="">All Stock Status</option>
+                    <option value="in">In Stock</option>
+                    <option value="out">Out of Stock</option>
+                </select>
+                <button id="btn-export-csv"
+                    class="flex items-center gap-1.5 px-3 py-2 text-xs border border-[#4B5694]/30 text-[#4B5694] rounded-lg hover:bg-[#4B5694]/10 transition-colors">
+                    <i class="fas fa-download text-xs"></i> Export CSV
+                </button>
+            </div>
+
+            <!-- Products Table -->
+            <div class="bg-card rounded-xl border border-[#4B5694]/20 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs">
+                        <thead>
+                            <tr class="bg-[#EAE0CF]/60 border-b border-[#4B5694]/15">
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">#</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Product</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Category</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Price</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Stock Qty</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Status</th>
+                                <th class="px-4 py-3 text-left font-semibold text-[#4B5694]">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-tbody" class="divide-y divide-[#4B5694]/10"></tbody>
+                    </table>
+                </div>
+                <div id="product-empty" class="hidden py-10 text-center text-xs text-[#7288AE]">
+                    <i class="fas fa-inbox mr-2"></i> No products found
+                </div>
+                <div id="product-pagination"
+                    class="flex items-center justify-between px-4 py-3 border-t border-[#4B5694]/15"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Root -->
+    <div id="modal-root"
+        class="hidden fixed inset-0 z-[300] flex items-center justify-center bg-[#111844]/70 backdrop-blur-sm"
+        style="display: none;">
+        <div class="bg-card rounded-xl w-full max-w-md mx-4 shadow-2xl transform transition-all">
+            <div class="flex items-center justify-between px-5 py-3 border-b border-[#4B5694]/15">
+                <h3 id="modal-title" class="text-sm font-semibold text-[#111844]">Modal Title</h3>
+                <button id="modal-close"
+                    class="text-[#7288AE] hover:text-[#111844] text-lg leading-none">&times;</button>
+            </div>
+            <div id="modal-body" class="p-5 max-h-[60vh] overflow-y-auto"></div>
+            <div class="flex justify-end gap-2 px-5 py-3 border-t border-[#4B5694]/15 bg-[#EAE0CF]/30">
+                <button id="modal-cancel"
+                    class="px-4 py-1.5 text-xs rounded-lg border border-[#4B5694]/30 hover:bg-[#4B5694]/10 transition-colors">Cancel</button>
+                <button id="modal-confirm"
+                    class="px-4 py-1.5 text-xs rounded-lg bg-[#111844] text-[#EAE0CF] hover:bg-[#1d2a70] transition-colors">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[400] space-y-2"></div>
+
+    <script>
+        // ============================================================
+        // COMPLETE SAMPLE DATA MODULE (with auto-initialization)
+        // ============================================================
+        const SAMPLE_DATA_VERSION_PROD = 'astro_prod_v3';
+
+        // Rich sample products data with quantity
+        const SAMPLE_PRODUCTS = [
+            { id: 'prod_1', name: 'Rudraksha Mala (5 Mukhi)', category: 'Mala & Beads', price: 1299, quantity: 25, inStock: true, description: 'Authentic Nepalese 5 Mukhi Rudraksha mala for peace and prosperity' },
+            { id: 'prod_2', name: 'Pyramid Yantra - Copper', category: 'Yantra', price: 850, quantity: 12, inStock: true, description: 'Copper pyramid yantra for wealth and abundance' },
+            { id: 'prod_3', name: 'Blue Sapphire (Neelam)', category: 'Gemstone', price: 3499, quantity: 0, inStock: false, description: 'Certified natural blue sapphire for Saturn influence' },
+            { id: 'prod_4', name: 'Moon Phase Calendar 2025', category: 'Astrology Tools', price: 599, quantity: 8, inStock: true, description: 'Complete moon phase calendar with auspicious dates' },
+            { id: 'prod_5', name: 'Meditation Beads (Crystal)', category: 'Mala & Beads', price: 450, quantity: 50, inStock: true, description: 'Clear quartz meditation beads for clarity' },
+            { id: 'prod_6', name: 'Sri Yantra (Gold Plated)', category: 'Yantra', price: 1899, quantity: 5, inStock: true, description: 'Gold plated Sri Yantra for cosmic energy' },
+            { id: 'prod_7', name: 'Yellow Sapphire (Pukhraj)', category: 'Gemstone', price: 4250, quantity: 3, inStock: true, description: 'Certified yellow sapphire for Jupiter blessings' },
+            { id: 'prod_8', name: 'Tulsi Mala', category: 'Mala & Beads', price: 350, quantity: 0, inStock: false, description: 'Sacred Tulsi beads for spiritual practice' },
+            { id: 'prod_9', name: 'Vastu Compass', category: 'Astrology Tools', price: 1299, quantity: 2, inStock: true, description: 'Professional Vastu compass for directional alignment' },
+            { id: 'prod_10', name: 'Emerald (Panna)', category: 'Gemstone', price: 2899, quantity: 7, inStock: true, description: 'Natural emerald for Mercury strength' }
+        ];
+
+        // Sample categories
+        const SAMPLE_CATEGORIES = ['Mala & Beads', 'Yantra', 'Gemstone', 'Astrology Tools', 'Books', 'Incense & Oils'];
+
+        // Initialize sample data
+        function initSampleProductsData() {
+            const flag = localStorage.getItem('astro_sample_prod_initialized');
+            if (flag !== SAMPLE_DATA_VERSION_PROD) {
+                localStorage.setItem('astronumerics_products', JSON.stringify(SAMPLE_PRODUCTS));
+                localStorage.setItem('astronumerics_categories', JSON.stringify(SAMPLE_CATEGORIES));
+                localStorage.setItem('astro_sample_prod_initialized', SAMPLE_DATA_VERSION_PROD);
+                console.log('✅ Sample products data loaded with quantity!');
+            }
+        }
+
+        // ============================================================
+        // AN Namespace & Helper Functions
+        // ============================================================
+        window.AN = window.AN || {};
+
+        AN.Store = {
+            get: (key) => {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : [];
+            },
+            set: (key, value) => localStorage.setItem(key, JSON.stringify(value))
+        };
+
+        AN.STORAGE_KEYS = {
+            PRODUCTS: 'astronumerics_products',
+            CATEGORIES: 'astronumerics_categories'
+        };
+
+        AN.genId = () => 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+
+        // Toast notifications
+        AN.Toast = {
+            show: (message, type = 'success') => {
+                const container = document.getElementById('toast-container');
+                if (!container) return;
+                const toast = document.createElement('div');
+                const bgColor = type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : type === 'info' ? 'bg-blue-600' : 'bg-gray-700';
+                const icon = type === 'success' ? '<i class="fas fa-check-circle mr-1"></i>' : type === 'error' ? '<i class="fas fa-exclamation-triangle mr-1"></i>' : '<i class="fas fa-info-circle mr-1"></i>';
+                toast.className = `${bgColor} text-white text-xs px-4 py-2 rounded-lg shadow-lg toast-animate flex items-center gap-2`;
+                toast.innerHTML = `${icon} ${message}`;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 2500);
+            },
+            success: (msg) => AN.Toast.show(msg, 'success'),
+            error: (msg) => AN.Toast.show(msg, 'error'),
+            info: (msg) => AN.Toast.show(msg, 'info')
+        };
+
+        AN.paginate = (items, page, perPage) => {
+            const total = items.length;
+            const totalPages = Math.ceil(total / perPage);
+            const current = Math.min(Math.max(1, page), totalPages || 1);
+            const start = (current - 1) * perPage;
+            return { items: items.slice(start, start + perPage), total, current, totalPages, from: start + 1, to: Math.min(start + perPage, total) };
+        };
+
+        AN.renderPagination = (containerId, pInfo, onPageChange) => {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            if (pInfo.totalPages <= 1) { container.innerHTML = ''; return; }
+            let html = `<div class="flex items-center gap-1 text-xs"><span class="text-[#7288AE]"><i class="fas fa-list mr-1"></i>${pInfo.from}-${pInfo.to} of ${pInfo.total}</span><div class="flex gap-1">`;
+            for (let i = 1; i <= pInfo.totalPages; i++) {
+                const active = i === pInfo.current ? 'bg-[#111844] text-[#EAE0CF]' : 'bg-[#EAE0CF] text-[#4B5694] hover:bg-[#4B5694]/10';
+                html += `<button data-page="${i}" class="w-7 h-7 rounded ${active} transition-colors">${i}</button>`;
+            }
+            html += `</div></div>`;
+            container.innerHTML = html;
+            container.querySelectorAll('[data-page]').forEach(btn => {
+                btn.addEventListener('click', (e) => { onPageChange(parseInt(e.target.dataset.page)); });
+            });
+        };
+
+        AN.exportCSV = (filename, fields, data) => {
+            const headers = fields.join(',');
+            const rows = data.map(item => fields.map(f => `"${String(item[f] || '').replace(/"/g, '""')}"`).join(','));
+            const csv = [headers, ...rows].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        };
+
+        AN.confirmDelete = (name, callback) => {
+            const modal = document.getElementById('modal-root');
+            if (!modal) return;
+            document.getElementById('modal-title').innerText = 'Confirm Delete';
+            document.getElementById('modal-body').innerHTML = `<p class="text-sm text-[#111844]"><i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>Are you sure you want to delete "<strong>${escapeHtml(name)}</strong>"? This action cannot be undone.</p>`;
+            modal.style.display = 'flex';
+            const confirmBtn = document.getElementById('modal-confirm');
+            const cancelBtn = document.getElementById('modal-cancel');
+            const closeBtn = document.getElementById('modal-close');
+            const cleanup = () => {
+                modal.style.display = 'none';
+                confirmBtn.removeEventListener('click', handler);
+                cancelBtn.removeEventListener('click', cleanup);
+                closeBtn.removeEventListener('click', cleanup);
+            };
+            const handler = () => { cleanup(); if (callback) callback(); };
+            confirmBtn.addEventListener('click', handler);
+            cancelBtn.addEventListener('click', cleanup);
+            closeBtn.addEventListener('click', cleanup);
+        };
+
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+
+        function formatPrice(price) { return `₹${price.toLocaleString('en-IN')}`; }
+
+        // Modal handler
+        function showModal(title, bodyHtml, onConfirm, confirmText = 'Confirm') {
+            const modal = document.getElementById('modal-root');
+            if (!modal) return;
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerHTML = bodyHtml;
+            document.getElementById('modal-confirm').innerText = confirmText;
+            modal.style.display = 'flex';
+            const confirmBtn = document.getElementById('modal-confirm');
+            const cancelBtn = document.getElementById('modal-cancel');
+            const closeBtn = document.getElementById('modal-close');
+            const cleanup = () => {
+                modal.style.display = 'none';
+                confirmBtn.removeEventListener('click', handler);
+                cancelBtn.removeEventListener('click', cleanup);
+                closeBtn.removeEventListener('click', cleanup);
+            };
+            const handler = () => {
+                if (onConfirm && onConfirm() !== false) cleanup();
+                else if (!onConfirm) cleanup();
+            };
+            confirmBtn.addEventListener('click', handler);
+            cancelBtn.addEventListener('click', cleanup);
+            closeBtn.addEventListener('click', cleanup);
+        }
+
+        // Set active navigation based on current page
+        function setActiveNav() {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('[data-nav-link]').forEach(link => {
+                link.classList.remove('nav-active');
+                const linkPath = link.getAttribute('href');
+                if (linkPath === currentPath || (currentPath.includes('products') && linkPath.includes('products'))) {
+                    link.classList.add('nav-active');
+                }
+            });
+        }
+
+        // ============================================================
+        // MAIN DASHBOARD LOGIC
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            initSampleProductsData();
+
+            let data = AN.Store.get(AN.STORAGE_KEYS.PRODUCTS) || [];
+            let categories = AN.Store.get(AN.STORAGE_KEYS.CATEGORIES) || SAMPLE_CATEGORIES;
+            let searchQuery = '';
+            let categoryFilter = '';
+            let stockFilter = '';
+            let currentPage = 1;
+            const PER_PAGE = 10;
+
+            function save() { AN.Store.set(AN.STORAGE_KEYS.PRODUCTS, data); }
+
+            function getFiltered() {
+                let filtered = [...data];
+                if (searchQuery) {
+                    const query = searchQuery.toLowerCase();
+                    filtered = filtered.filter(p =>
+                        p.name.toLowerCase().includes(query) ||
+                        p.category.toLowerCase().includes(query) ||
+                        (p.description && p.description.toLowerCase().includes(query))
+                    );
+                }
+                if (categoryFilter) {
+                    filtered = filtered.filter(p => p.category === categoryFilter);
+                }
+                if (stockFilter === 'in') {
+                    filtered = filtered.filter(p => p.inStock === true && (p.quantity || 0) > 0);
+                } else if (stockFilter === 'out') {
+                    filtered = filtered.filter(p => p.inStock === false || (p.quantity || 0) === 0);
+                }
+                return filtered;
+            }
+
+            function renderStats() {
+                const total = data.length;
+                const inStock = data.filter(p => p.inStock === true && (p.quantity || 0) > 0).length;
+                const outStock = data.filter(p => p.inStock === false || (p.quantity || 0) === 0).length;
+                const totalQuantity = data.reduce((sum, p) => sum + (p.quantity || 0), 0);
+
+                document.getElementById('product-stats').innerHTML = `
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-100 text-blue-700 text-xs font-medium border border-blue-200">
+                        <i class="fas fa-boxes"></i><span>${total}</span><span>Total</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-100 text-green-700 text-xs font-medium border border-green-200">
+                        <i class="fas fa-check-circle"></i><span>${inStock}</span><span>In Stock</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-100 text-red-700 text-xs font-medium border border-red-200">
+                        <i class="fas fa-times-circle"></i><span>${outStock}</span><span>Out of Stock</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-purple-100 text-purple-700 text-xs font-medium border border-purple-200">
+                        <i class="fas fa-calculator"></i><span>${totalQuantity}</span><span>Total Qty</span>
+                    </div>
+                `;
+            }
+
+            function updateQuantity(productId, newQuantity) {
+                const product = data.find(p => p.id === productId);
+                if (product) {
+                    product.quantity = Math.max(0, newQuantity);
+                    product.inStock = product.quantity > 0;
+                    save();
+                    renderTable();
+                    renderStats();
+                    AN.Toast.info(`${product.name} quantity updated to ${product.quantity}`);
+                }
+            }
+
+            function renderTable() {
+                const filtered = getFiltered();
+                const pInfo = AN.paginate(filtered, currentPage, PER_PAGE);
+                const tbody = document.getElementById('product-tbody');
+                const emptyDiv = document.getElementById('product-empty');
+
+                if (pInfo.items.length === 0) {
+                    tbody.innerHTML = '';
+                    emptyDiv.style.display = 'block';
+                } else {
+                    emptyDiv.style.display = 'none';
+                    tbody.innerHTML = pInfo.items.map((p, idx) => `
+                        <tr class="hover:bg-[#EAE0CF]/40 transition-colors">
+                            <td class="px-4 py-3 text-[#7288AE]">${pInfo.from + idx}</td>
+                            <td class="px-4 py-3">
+                                <div>
+                                    <div class="font-medium text-[#111844]">${escapeHtml(p.name)}</div>
+                                    <div class="text-[10px] text-[#7288AE] mt-0.5 truncate max-w-[200px]"><i class="fas fa-align-left mr-1 text-[8px]"></i>${escapeHtml(p.description ? p.description.substring(0, 50) : '')}${p.description && p.description.length > 50 ? '...' : ''}</div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3"><span class="px-2 py-1 rounded-full bg-[#EAE0CF] text-[#4B5694] text-[10px]"><i class="fas fa-tag mr-1"></i>${escapeHtml(p.category)}</span></td>
+                            <td class="px-4 py-3 font-semibold text-[#111844]"><i class="fas fa-rupee-sign mr-1 text-[#4B5694]"></i>${formatPrice(p.price)}</td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-[#111844] text-sm">${p.quantity || 0}</span>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium ${p.inStock && (p.quantity || 0) > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}">
+                                    <i class="fas ${p.inStock && (p.quantity || 0) > 0 ? 'fa-check-circle' : 'fa-times-circle'} mr-1"></i>
+                                    ${p.inStock && (p.quantity || 0) > 0 ? 'In Stock' : 'Out of Stock'}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-1.5">
+                                    <button data-edit="${p.id}" class="w-7 h-7 rounded flex items-center justify-center bg-amber-50 text-amber-600 hover:bg-amber-100 transition-colors" title="Edit Product">
+                                        <i class="fas fa-edit text-xs"></i>
+                                    </button>
+                                    <button data-del="${p.id}" class="w-7 h-7 rounded flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 transition-colors" title="Delete Product">
+                                        <i class="fas fa-trash-alt text-xs"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('');
+
+                    // Attach event listeners
+                    pInfo.items.forEach(p => {
+                        const editBtn = tbody.querySelector(`[data-edit="${p.id}"]`);
+                        const delBtn = tbody.querySelector(`[data-del="${p.id}"]`);
+
+                        if (editBtn) editBtn.addEventListener('click', () => openEdit(p.id));
+                        if (delBtn) {
+                            delBtn.addEventListener('click', () => {
+                                AN.confirmDelete(p.name, () => {
+                                    data = data.filter(i => i.id !== p.id);
+                                    save();
+                                    if (currentPage > 1 && getFiltered().length <= (currentPage - 1) * PER_PAGE) currentPage--;
+                                    renderTable();
+                                    renderStats();
+                                    AN.Toast.success('Product deleted');
+                                });
+                            });
+                        }
+                    });
+                }
+
+                AN.renderPagination('product-pagination', pInfo, p => { currentPage = p; renderTable(); });
+                renderStats();
+            }
+
+            function buildForm(product = null) {
+                const categoryOptions = categories.map(cat => `<option ${product?.category === cat ? 'selected' : ''}>${escapeHtml(cat)}</option>`).join('');
+                return `<div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-tag mr-1"></i>Product Name *</label>
+                        <input name="name" value="${escapeHtml(product?.name || '')}" type="text" placeholder="e.g., Rudraksha Mala" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" required/>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-folder mr-1"></i>Category</label>
+                            <select name="category" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]">
+                                <option value="">Select category...</option>
+                                ${categoryOptions}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-rupee-sign mr-1"></i>Price (₹) *</label>
+                            <input name="price" value="${product?.price || ''}" type="number" step="1" placeholder="1299" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" required/>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-boxes mr-1"></i>Stock Quantity *</label>
+                        <input name="quantity" value="${product?.quantity || 0}" type="number" min="0" step="1" placeholder="0" class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694]" required/>
+                        <p class="text-[10px] text-[#7288AE] mt-1"><i class="fas fa-info-circle mr-1"></i>Enter the number of items in stock. Set to 0 for out of stock.</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-[#4B5694] mb-1"><i class="fas fa-align-left mr-1"></i>Description</label>
+                        <textarea name="description" rows="2" placeholder="Product description..." class="w-full text-xs px-3 py-2 rounded-lg border border-[#4B5694]/30 bg-[#EAE0CF] focus:outline-none focus:border-[#4B5694] resize-none">${escapeHtml(product?.description || '')}</textarea>
+                    </div>
+                    <input name="id" type="hidden" value="${product?.id || ''}"/>
+                </div>`;
+            }
+
+            function openEdit(id) {
+                const product = data.find(p => p.id === id);
+                if (!product) return;
+
+                showModal('Edit Product', buildForm(product), () => {
+                    const nameInput = document.querySelector('#modal-body [name="name"]');
+                    const priceInput = document.querySelector('#modal-body [name="price"]');
+                    const quantityInput = document.querySelector('#modal-body [name="quantity"]');
+                    const name = nameInput?.value.trim();
+                    const price = parseFloat(priceInput?.value);
+                    const quantity = parseInt(quantityInput?.value) || 0;
+
+                    if (!name) { AN.Toast.error('Product name is required'); return false; }
+                    if (!price || isNaN(price) || price <= 0) { AN.Toast.error('Valid price is required'); return false; }
+
+                    product.name = name;
+                    product.category = document.querySelector('#modal-body [name="category"]')?.value || '';
+                    product.price = price;
+                    product.quantity = quantity;
+                    product.inStock = quantity > 0;
+                    product.description = document.querySelector('#modal-body [name="description"]')?.value.trim() || '';
+
+                    save();
+                    renderTable();
+                    AN.Toast.success('Product updated!');
+                }, 'Save Changes');
+            }
+
+            // Add new product
+            document.getElementById('btn-add-product')?.addEventListener('click', () => {
+                showModal('Add New Product', buildForm(null), () => {
+                    const nameInput = document.querySelector('#modal-body [name="name"]');
+                    const priceInput = document.querySelector('#modal-body [name="price"]');
+                    const quantityInput = document.querySelector('#modal-body [name="quantity"]');
+                    const name = nameInput?.value.trim();
+                    const price = parseFloat(priceInput?.value);
+                    const quantity = parseInt(quantityInput?.value) || 0;
+
+                    if (!name) { AN.Toast.error('Product name is required'); return false; }
+                    if (!price || isNaN(price) || price <= 0) { AN.Toast.error('Valid price is required'); return false; }
+
+                    const newProduct = {
+                        id: AN.genId(),
+                        name: name,
+                        category: document.querySelector('#modal-body [name="category"]')?.value || '',
+                        price: price,
+                        quantity: quantity,
+                        inStock: quantity > 0,
+                        description: document.querySelector('#modal-body [name="description"]')?.value.trim() || ''
+                    };
+
+                    data.unshift(newProduct);
+                    save();
+                    currentPage = 1;
+                    renderTable();
+                    AN.Toast.success('Product added successfully!');
+                }, 'Add Product');
+            });
+
+            // Update category filter dropdown
+            function updateCategoryFilter() {
+                const select = document.getElementById('filter-category');
+                if (select) {
+                    select.innerHTML = '<option value="">All Categories</option>' + categories.map(c => `<option>${escapeHtml(c)}</option>`).join('');
+                }
+            }
+
+            // Export CSV
+            document.getElementById('btn-export-csv')?.addEventListener('click', () => {
+                AN.exportCSV('products_export.csv', ['name', 'category', 'price', 'quantity', 'inStock', 'description'], getFiltered());
+                AN.Toast.success('Exported to CSV');
+            });
+
+            // Search input
+            const searchInput = document.getElementById('product-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchQuery = e.target.value;
+                    currentPage = 1;
+                    renderTable();
+                });
+            }
+
+            // Category filter
+            const categoryFilterEl = document.getElementById('filter-category');
+            if (categoryFilterEl) {
+                categoryFilterEl.addEventListener('change', (e) => {
+                    categoryFilter = e.target.value;
+                    currentPage = 1;
+                    renderTable();
+                });
+            }
+
+            // Stock filter
+            const stockFilterEl = document.getElementById('filter-stock');
+            if (stockFilterEl) {
+                stockFilterEl.addEventListener('change', (e) => {
+                    stockFilter = e.target.value;
+                    currentPage = 1;
+                    renderTable();
+                });
+            }
+
+            updateCategoryFilter();
+
+            // Sidebar toggle functionality
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            let isCollapsed = false;
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', () => {
+                    if (window.innerWidth < 1024) {
+                        sidebar.classList.toggle('sidebar-open');
+                        overlay?.classList.toggle('hidden');
+                    } else {
+                        isCollapsed = !isCollapsed;
+                        if (isCollapsed) {
+                            sidebar.classList.add('sidebar-collapsed');
+                            const mainWrapper = document.getElementById('main-wrapper');
+                            mainWrapper.classList.add('main-expanded');
+                            mainWrapper.style.marginLeft = '68px';
+                        } else {
+                            sidebar.classList.remove('sidebar-collapsed');
+                            const mainWrapper = document.getElementById('main-wrapper');
+                            mainWrapper.classList.remove('main-expanded');
+                            mainWrapper.style.marginLeft = '';
+                        }
+                    }
+                });
+            }
+
+            overlay?.addEventListener('click', () => {
+                sidebar?.classList.remove('sidebar-open');
+                overlay.classList.add('hidden');
+            });
+
+            // User menu dropdown
+            const userMenuBtn = document.getElementById('user-menu-btn');
+            const userMenu = document.getElementById('user-menu');
+            if (userMenuBtn && userMenu) {
+                userMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    userMenu.classList.toggle('hidden');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!userMenuBtn.contains(e.target) && !userMenu.contains(e.target)) {
+                        userMenu.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Notification button
+            document.getElementById('notif-btn')?.addEventListener('click', () => {
+                AN.Toast.info('No new notifications at this time');
+            });
+
+            setActiveNav();
+            renderTable();
+        });
+    </script>
 </body>
+
 </html>
